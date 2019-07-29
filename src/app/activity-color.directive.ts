@@ -10,12 +10,12 @@ export class ActivityColorDirective implements OnInit {
 	@HostBinding('class.activity-run') displayColorRun: boolean = false;
 	@HostBinding('class.activity-fitness') displayColorFitness: boolean = false;
 	@HostBinding('class.activity-race') displayColorRace: boolean = false;
-  @Input('appActivityColor') activityName: {name: string, status: number};   
+  @Input('appActivityColor') activityName: {name: string, status: number, planned: number};   
 
   constructor() { }
 
   ngOnInit() {
-    if (this.activityName.status === 1) {
+    if (this.activityName.status === 1 && this.activityName.planned === 1) {
       switch (this.activityName.name) {
         case 'off':
           this.displayColorOff = true;

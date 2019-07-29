@@ -5,7 +5,7 @@
   </div>
   <div class="col col-8 text-center">
     <h3>Week #23</h3>
-    from {{ weekFrom }} to {{ weekTo}}
+    from {{ weekRangeFrom | date:'dd/MM/yyyy' }} to {{ weekRangeTo | date:'dd/MM/yyyy' }}
   </div>
   <div class="col col-2">
       <button class="btn btn-secondary" style="width: 160px">Next week &gt;</button>
@@ -27,7 +27,7 @@
           class="list-group-item text-center" 
           [appActivityColor]="activity"> 
           {{ activity.name | uppercase }} 
-          <img *ngIf="activity.name === 'bike'" src="../../assets/img/check_black.png" height="20">
+          <img *ngIf="activity.status === 1" src="../../assets/img/check_black.png" height="20">
         </li>
       </ul>
     </span>
