@@ -1,0 +1,31 @@
+.activity-off-light {
+  background-color: #BDBDBD;
+  color: white;
+  font-weight: bold;
+}
+.activity-swim-light {
+  background: rgba(8, 192, 247, 1); 
+  color: white;
+  font-weight: bold;
+}
+.activity-bike-light {
+  background: rgba(133, 222, 25, 1); 
+  color: white;
+  font-weight: bold;
+}
+.activity-run-light {
+  background: rgba(247, 19, 16, 1); 
+  color: white;
+  font-weight: bold;
+}
+.activity-fitness-light {
+  background: rgba(181, 107, 250, 1); 
+  color: white;
+  font-weight: bold;
+}
+.activity-race-light {
+  background: rgba(250, 139, 22, 1); 
+  color: white;
+  font-weight: bold;
+}   
+    
