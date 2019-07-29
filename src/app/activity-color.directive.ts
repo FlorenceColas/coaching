@@ -4,12 +4,12 @@ import { Directive, HostBinding, OnInit, Input } from '@angular/core';
   selector: '[appActivityColor]'
 })
 export class ActivityColorDirective implements OnInit {
-	@HostBinding('class.activity-off-light') displayColorOff: boolean = false;
-	@HostBinding('class.activity-swim-light') displayColorSwim: boolean = false;
-	@HostBinding('class.activity-bike-light') displayColorBike: boolean = false;
-	@HostBinding('class.activity-run-light') displayColorRun: boolean = false;
-	@HostBinding('class.activity-fitness-light') displayColorFitness: boolean = false;
-	@HostBinding('class.activity-race-light') displayColorRace: boolean = false;
+	@HostBinding('class.activity-off') displayColorOff: boolean = false;
+	@HostBinding('class.activity-swim') displayColorSwim: boolean = false;
+	@HostBinding('class.activity-bike') displayColorBike: boolean = false;
+	@HostBinding('class.activity-run') displayColorRun: boolean = false;
+	@HostBinding('class.activity-fitness') displayColorFitness: boolean = false;
+	@HostBinding('class.activity-race') displayColorRace: boolean = false;
   @Input('appActivityColor') activityName: {name: string, status: number};   
 
   constructor() { }

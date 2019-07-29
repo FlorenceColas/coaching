@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
-	<a class="navbar-brand" href="#">Sport Coaching</a>
+	<a class="navbar-brand" routerLink="/week" routerLinkActive="active"><img src="../../favicon.ico" width="20"> Sport Coaching </a>
 	<button class="navbar-toggler">
 		<span class="navbar-toggler-icon"></span>		
 	</button>
@@ -11,29 +11,15 @@
 		<li class="nav-item">
 			<a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
 		</li>
-		<li class="nav-dropdown">
-				<a class="nav-link" routerLink="/profile" routerLinkActive="active">My profile</a>
-		</li>
 		<li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu">
-          <a class="dropdown-item" routerLink="/profile" routerLinkActive="active">My profile</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="/profile" routerLinkActive="active">Logout</a>
-        </div>
+			<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			Florence
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu">
+				<a class="dropdown-item" routerLink="/profile" routerLinkActive="active">My profile</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" routerLink="/logout" routerLinkActive="active">Logout</a>
+			</div>
 		</li>
-		<!--
-		<li class="nav-item dropdown" dropdown >
-				<a dropdownToggle mdbRippleRadius type="button" class="nav-link dropdown-toggle waves-effect waves-light clear-bg">
-										<span class="nowrap"><i class="fa fa-user"></i>toto&nbsp;<span class="caret"></span></span>
-				</a>
-				<div  class="dropdown-menu drop-menu-right dropdown dropdown-info dropdown-clear" role="menu">
-						<a class='dropdown-item waves-effect waves-light link-item-clear' mdbRippleRadius [routerLink]="['/profile']"   dropdownToggle>Profile</a>
-						<a class='dropdown-item waves-effect waves-light link-item-clear' mdbRippleRadius (click)="logout()"  dropdownToggle>Logout</a>
-				</div>                      
-		</li>
-		-->	
 	</ul>
 </nav>

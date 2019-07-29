@@ -9,6 +9,7 @@ const APP_ROUTE: Route[] = [
   { path: '', redirectTo: 'week', pathMatch: 'full' },
   { path: 'contact', component: ContactComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'logout', redirectTo: 'week' },
   { path: 'week', component: WeekComponent, pathMatch: 'full' },
   { path: 'week/:id', component: WeekComponent }
 ];

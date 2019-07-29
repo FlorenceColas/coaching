@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app.routing';
 import { ActivityComponent } from './activity/activity.component';
 import { ContactComponent } from './contact/contact.component';
 import { ProfileComponent } from './profile/profile.component';
+import { BorderDirective } from './border.directive';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ProfileComponent } from './profile/profile.component';
     WeekComponent,
     ActivityComponent,
     ContactComponent,
-    ProfileComponent
+    ProfileComponent,
+    BorderDirective
   ],
   imports: [
     AppRoutingModule,
