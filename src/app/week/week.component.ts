@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { TitleCasePipe } from '@angular/common';
 
 interface ActivityInterface {
   name: string, 
@@ -21,7 +22,6 @@ interface WeekInterface {
   styleUrls: ['./week.component.css']
 })
 export class WeekComponent implements OnInit {
-  private weekNumber: number;
   public dayNow: number = Date.now();
   public week: WeekInterface[] = [
     { day: { day: 1, day_label: "Monday", date: 12314562 }, activities: [
@@ -89,19 +89,29 @@ export class WeekComponent implements OnInit {
     ]
     },
   ];
-  
+  private weekNumber: number;
+  public dayTitle: string;
+
   constructor(
     private activatedRoute: ActivatedRoute
   ) { }
 
+  getDayName(dateValue: number, locale: string) {
+    var date = new Date(dateValue);
+    return date.toLocaleDateString(locale, { weekday: 'long' });        
+  }
+
   ngOnInit() {
-    const now = new Date();
+    const now = new Date().getTime();
+    this.dayTitle = this.getDayName(now, "nl-NL");
 
     this.activatedRoute.paramMap.subscribe( (params: ParamMap) => {
-      if (params.get("week_number")) {
-        this.weekNumber = parseInt(params.get("week_number"));
+      if (params.get("id")) {
+        this.weekNumber = parseInt(params.get("id"));
+        console.log(this.weekNumber);
       } else {
-
+        this.weekNumber = 0;
+        //get current week
       }
     })
   }
