@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { WeekActivities } from '../shared/models/week-activities.model';
@@ -9,7 +9,7 @@ import { WeekService } from '../shared/services/week.service';
   templateUrl: './week.component.html',
   styleUrls: ['./week.component.css']
 })
-export class WeekComponent implements OnDestroy, OnInit {
+export class WeekComponent implements OnInit {
   public weekActivities: WeekActivities
   public weekNumber: number;
 
@@ -19,27 +19,21 @@ export class WeekComponent implements OnDestroy, OnInit {
     private weekService: WeekService
   ) { }
 
-  ngOnDestroy() {
-    console.log("ngOnDestroy");
-  }
-
   ngOnInit() {
     const now = new Date().getTime();
 
-    console.log("ngOnInit");
     this.activatedRoute.paramMap.subscribe( (params: ParamMap) => {
       if (params.get("id")) {
         this.weekNumber = parseInt(params.get("id"));
       } else {
-        //get current week
         this.weekNumber = this.getWeek(now);
       }
     })
-    console.log(this.weekNumber);
 
-    this.weekService.getWeekActivities(this.weekNumber).subscribe( (weekActivities: WeekActivities) => {
+    this.weekService.weekActivities.subscribe( (weekActivities: WeekActivities) => {
       this.weekActivities = weekActivities;
     });
+    this.weekService.getWeekActivities(this.weekNumber);
   }
 
   getWeek(d: number): number {
@@ -54,6 +48,7 @@ export class WeekComponent implements OnDestroy, OnInit {
   }
 
   navigateToWeek(weekNumber: number) {
+    this.weekService.getWeekActivities(weekNumber);
     this.router.navigate(['week', weekNumber]);
   }
 }

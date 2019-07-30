@@ -1,7 +1,7 @@
 {
   "days": [
     {
-      "day": { "day": 1, "day_label": "Monday", "date": 1567029600000, "date_iso": "2019-07-29"}, 
+      "day": { "day": 1, "day_label": "Monday", "date": 1564351200000, "date_iso": "2019-07-29"}, 
       "activities": [
         { "name": "off", "status": 0, "planned": 0 },
         { "name": "swim", "status": 0, "planned": 0 },
@@ -12,7 +12,7 @@
       ]
     },
     {
-      "day": { "day": 2, "day_label": "Tuesday", "date": 1567116000000, "date_iso": "2019-07-30"}, 
+      "day": { "day": 2, "day_label": "Tuesday", "date": 1564437600000, "date_iso": "2019-07-30"}, 
       "activities": [
         { "name": "off", "status": 0, "planned": 0 },
         { "name": "swim", "status": 1, "planned": 0 },
@@ -23,7 +23,7 @@
       ]
     },
     {
-      "day": { "day": 3, "day_label": "Wednesday", "date": 1567202400000, "date_iso": "2019-07-31"}, 
+      "day": { "day": 3, "day_label": "Wednesday", "date": 1564524000000, "date_iso": "2019-07-31"}, 
       "activities": [
         { "name": "off", "status": 0, "planned": 0 },
         { "name": "swim", "status": 1, "planned": 1 },
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "day": { "day": 4, "day_label": "Thursday", "date": 1567288800000, "date_iso": "2019-08-01"}, 
+      "day": { "day": 4, "day_label": "Thursday", "date": 1564610400000, "date_iso": "2019-08-01"}, 
       "activities": [
         { "name": "off", "status": 1, "planned": 1 },
         { "name": "swim", "status": 0, "planned": 0 },
@@ -45,7 +45,7 @@
       ]
     },
     {
-      "day": { "day": 5, "day_label": "Friday", "date": 1567375200000, "date_iso": "2019-08-02"}, 
+      "day": { "day": 5, "day_label": "Friday", "date": 1564696800000, "date_iso": "2019-08-02"}, 
       "activities": [
         { "name": "off", "status": 0, "planned": 0 },
         { "name": "swim", "status": 0, "planned": 0 },
@@ -56,7 +56,7 @@
       ]
     },
     {
-      "day": { "day": 6, "day_label": "Saturday", "date": 1567461600000, "date_iso": "2019-08-03"}, 
+      "day": { "day": 6, "day_label": "Saturday", "date": 1564783200000, "date_iso": "2019-08-03"}, 
       "activities": [
         { "name": "off", "status": 0, "planned": 0 },
         { "name": "swim", "status": 0, "planned": 0 },
@@ -67,7 +67,7 @@
       ]
     },
     {
-      "day": { "day": 7, "day_label": "Sunday", "date": 1567548000000, "date_iso": "2019-08-04"}, 
+      "day": { "day": 7, "day_label": "Sunday", "date": 1564869600000, "date_iso": "2019-08-04"}, 
       "activities": [
         { "name": "off", "status": 0, "planned": 0 },
         { "name": "swim", "status": 1, "planned": 1 },
@@ -78,5 +78,5 @@
       ]
     }
   ],
-  "week": { "id": 1, "next_week": 32, "number": 31, "previous_week": 30, "range_from": 1567029600000, "range_to": 1567548000000, "year": 2019 }
+  "week": { "id": 1, "next_week": 32, "number": 31, "previous_week": 30, "range_from": 1564351200000, "range_to": 1564869600000, "year": 2019 }
 }
