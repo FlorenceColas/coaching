@@ -78,5 +78,5 @@
       ]
     }
   ],
-  "week": { "id": 1, "number": 31, "year": 2019, "range_from": 1567029600000, "range_to": 1567548000000 }
+  "week": { "id": 1, "next_week": 32, "number": 31, "previous_week": 30, "range_from": 1567029600000, "range_to": 1567548000000, "year": 2019 }
 }

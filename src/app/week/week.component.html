@@ -1,15 +1,14 @@
-<!--{{ dayTitle | titlecase }}-->
 <div *ngIf="weekActivities">
   <div class="row">
     <div class="col col-2">
-        <button class="btn btn-secondary" style="width: 160px">&lt; Previous week</button>
+        <button class="btn btn-secondary" style="width: 160px" (click)="navigateToWeek(weekActivities.week.previous_week)">&lt; Previous week</button>
     </div>
     <div class="col col-8 text-center">
       <h3>Week #{{ weekActivities.week.number }}</h3>
       from {{ weekActivities.week.range_from | date:'dd/MM/yyyy' }} to {{ weekActivities.week.range_to | date:'dd/MM/yyyy' }}
     </div>
     <div class="col col-2">
-        <button class="btn btn-secondary float-right" style="width: 160px">Next week &gt;</button>
+        <button class="btn btn-secondary float-right" style="width: 160px" (click)="navigateToWeek(weekActivities.week.next_week)">Next week &gt;</button>
     </div>
   </div>
 

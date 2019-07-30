@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { WeekService } from '../shared/services/week.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+
 import { WeekActivities } from '../shared/models/week-activities.model';
+import { WeekService } from '../shared/services/week.service';
 
 @Component({
   selector: 'app-week',
@@ -9,22 +10,14 @@ import { WeekActivities } from '../shared/models/week-activities.model';
   styleUrls: ['./week.component.css']
 })
 export class WeekComponent implements OnInit {
-  public dayNow: number = Date.now();
   public weekActivities: WeekActivities
   public weekNumber: number;
-  public dayTitle: string;
-  public weekRangeFrom: number;
-  public weekRangeTo: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private weekService: WeekService
   ) { }
-
-  getDayName(dateValue: number, locale: string) {
-    var date = new Date(dateValue);
-    return date.toLocaleDateString(locale, { weekday: 'long' });        
-  }
 
   ngOnInit() {
     const now = new Date().getTime();
@@ -40,13 +33,10 @@ export class WeekComponent implements OnInit {
 
     this.weekService.getWeekActivities(this.weekNumber).subscribe( (weekAct: WeekActivities) => {
       this.weekActivities = weekAct;
-      });
-
-    this.dayTitle = this.getDayName(now, "en-GB");
-    console.log(this.dayTitle);
+    });
   }
 
-  private getWeek(d: number): number {
+  getWeek(d: number): number {
     let date = new Date(d);
     date.setHours(0, 0, 0, 0);
     // Thursday in current week decides the year.
@@ -55,5 +45,9 @@ export class WeekComponent implements OnInit {
     var week1 = new Date(date.getFullYear(), 0, 4);
     // Adjust to Thursday in week 1 and count number of weeks from date to week1.
     return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+  }
+
+  navigateToWeek(weekNumber: number) {
+    this.router.navigate(['week', weekNumber]);
   }
 }
