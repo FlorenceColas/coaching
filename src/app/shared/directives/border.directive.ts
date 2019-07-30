@@ -10,11 +10,7 @@ export class BorderDirective implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const now2 = new Date();
-    var d = now2.getDate();
-    var m = now2.getMonth() + 1;
-    var y = now2.getFullYear();
-    const currentDay = '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+    const currentDay = new Date().toISOString().slice(0, 10);
 
     if (this.day === currentDay) {
       this.displayBorder = true;

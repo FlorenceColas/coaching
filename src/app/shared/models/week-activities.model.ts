@@ -1,11 +1,9 @@
-import { Activity } from './activity.model';
-import { Day } from './day.model';
 import { Week } from './week.model';
+import { DayActivities } from './day-activities.model';
 
 export class WeekActivities {
   constructor(
-    public week: Week,
-    public day: Day,
-    public activities: Activity[]
+    public days: DayActivities[],
+    public week: Week
     ) {}
 }

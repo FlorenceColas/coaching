@@ -1,5 +1,3 @@
-import { Week } from './week.model';
-
 export class Activity {
 	constructor(
     public id: number, 

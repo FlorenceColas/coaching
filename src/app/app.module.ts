@@ -1,30 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { ActivityColorDirective } from './activity-color.directive';
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { WeekComponent } from './week/week.component';
-import { AppRoutingModule } from './app.routing';
 import { ActivityComponent } from './activity/activity.component';
-import { ContactComponent } from './contact/contact.component';
-import { ProfileComponent } from './profile/profile.component';
-import { BorderDirective } from './border.directive';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing';
+import { ContactModule } from './contact/contact.module';
+import { ContactRoutingModule } from './contact/contact.routing';
+import { ProfileModule } from './profile/profile.module';
+import { ProfileRoutingModule } from './profile/profile.routing';
+import { SharedModule } from './shared/modules/shared.module';
+import { WeekModule } from './week/week.module';
+import { WeekRoutingModule } from './week/week.routing';
 
 @NgModule({
   declarations: [
-    ActivityColorDirective,
-    AppComponent,
-    HeaderComponent,
-    WeekComponent,
     ActivityComponent,
-    ContactComponent,
-    ProfileComponent,
-    BorderDirective
+    AppComponent
   ],
   imports: [
     AppRoutingModule,
-    BrowserModule
+    BrowserModule,
+    ContactModule,
+    ContactRoutingModule,
+    HttpClientModule,
+    ProfileModule,
+    ProfileRoutingModule,
+    SharedModule,
+    WeekModule,
+    WeekRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

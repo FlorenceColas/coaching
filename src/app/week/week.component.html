@@ -1,36 +1,35 @@
 <!--{{ dayTitle | titlecase }}-->
-<div class="row ml-4 mr-4">
-  <div class="col col-2">
-      <button class="btn btn-secondary" style="width: 160px">&lt; Previous week</button>
-  </div>
-  <div class="col col-8 text-center">
-    <h3>Week #23</h3>
-    from {{ weekRangeFrom | date:'dd/MM/yyyy' }} to {{ weekRangeTo | date:'dd/MM/yyyy' }}
-  </div>
-  <div class="col col-2">
-      <button class="btn btn-secondary" style="width: 160px">Next week &gt;</button>
-  </div>
-</div>
-
-<hr>
-
-<div class="ml-4 mr-4">
+<div *ngIf="weekActivities">
   <div class="row">
-    <span [appBorder]="item.day.date_iso" *ngFor="let item of week; let index = index" class="col text-center">
+    <div class="col col-2">
+        <button class="btn btn-secondary" style="width: 160px">&lt; Previous week</button>
+    </div>
+    <div class="col col-8 text-center">
+      <h3>Week #{{ weekActivities.week.number }}</h3>
+      from {{ weekActivities.week.range_from | date:'dd/MM/yyyy' }} to {{ weekActivities.week.range_to | date:'dd/MM/yyyy' }}
+    </div>
+    <div class="col col-2">
+        <button class="btn btn-secondary float-right" style="width: 160px">Next week &gt;</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <span [appBorder]="item.day.date_iso" *ngFor="let item of weekActivities.days; let index = index" class="col text-center">
       {{ item.day.day_label }} <br> {{ item.day.date | date:'dd/MM/yyyy' }}
     </span>
   </div>
   <div class="row">
-    <span *ngFor="let item of week" class="col">
+    <span *ngFor="let item of weekActivities.days" class="col">
       <ul class="list-group">
         <li *ngFor="let activity of item.activities"
           class="list-group-item text-center" 
           [appActivityColor]="activity"> 
           {{ activity.name | uppercase }} 
-          <img *ngIf="activity.status === 1" src="../../assets/img/check_black.png" height="20">
+          <img *ngIf="activity.status === 1" src="../../assets/img/check_black.png" height="20" class="float-right">
         </li>
       </ul>
     </span>
   </div>
-</div>
-      
+</div>  
