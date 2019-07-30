@@ -13,6 +13,6 @@ export class WeekService {
   constructor(private http: HttpClient) {}
 
   getWeekActivities(weekNumber: number): Observable<WeekActivities> {
-    return this.http.get<WeekActivities>(this.uri);
+    return this.http.get<WeekActivities>('http://localhost:4200/assets/week-activities' + weekNumber + '.json');
   }
 }
