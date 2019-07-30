@@ -15,6 +15,6 @@ export class WeekService {
   }
 
   getWeekActivities(weekNumber: number): Observable<WeekActivities> {
-    this.http.get<WeekActivities>('http://localhost:4200/assets/week-activities' + weekNumber + '.json');
+    return this.http.get<WeekActivities>('http://localhost:4200/assets/week-activities' + weekNumber + '.json');
   }
 }
