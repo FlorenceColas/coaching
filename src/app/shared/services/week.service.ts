@@ -13,8 +13,10 @@ export class WeekService {
   constructor(private http: HttpClient) {}
 
   getWeekActivities(weekNumber: number): void {
-    this.http.get<WeekActivities>('http://localhost:4200/assets/week-activities' + weekNumber + '.json').subscribe( (weekActivities: WeekActivities) => {
-      this.weekActivities.next(weekActivities);
-    });
+    this.http.get<WeekActivities>('http://localhost:4200/assets/week-activities' + weekNumber + '.json').subscribe( 
+      (weekActivities: WeekActivities) => {
+        this.weekActivities.next(weekActivities);
+      }
+    );
   }
 }
