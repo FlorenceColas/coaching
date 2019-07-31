@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
-
+  public value: boolean = false;
+  
   constructor() { }
 
   ngOnInit() {

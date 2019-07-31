@@ -1,6 +1,7 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
+import { MaterialModule } from '../material.module';
 import { SharedModule } from '../shared/modules/shared.module';
 import { WeekComponent } from './week.component';
 import { WeekService } from '../shared/services/week.service';
@@ -11,6 +12,7 @@ import { WeekService } from '../shared/services/week.service';
   ],
   imports: [
     FormsModule,
+    MaterialModule,
     ReactiveFormsModule,
     SharedModule
   ],

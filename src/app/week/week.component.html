@@ -1,14 +1,20 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <div *ngIf="weekActivities">
   <div class="row">
     <div class="col col-2">
-        <button class="btn btn-secondary" style="width: 160px" (click)="navigateToWeek(weekActivities.week.previous_week)">&lt; Previous week</button>
+      <button mat-icon-button color="primary" style="width: 160px" (click)="navigateToWeek(weekActivities.week.previous_week)">
+        <mat-icon aria-hidden="false">navigate_before</mat-icon> Previous week
+      </button>
     </div>
     <div class="col col-8 text-center">
       <h3>Week #{{ weekActivities.week.number }}</h3>
       from {{ weekActivities.week.range_from | date:'dd/MM/yyyy' }} to {{ weekActivities.week.range_to | date:'dd/MM/yyyy' }}
     </div>
     <div class="col col-2">
-        <button class="btn btn-secondary float-right" style="width: 160px" (click)="navigateToWeek(weekActivities.week.next_week)">Next week &gt;</button>
+      <button mat-icon-button color="primary" class="float-right" style="width: 160px" (click)="navigateToWeek(weekActivities.week.next_week)">
+        Next week <mat-icon aria-hidden="false">navigate_next</mat-icon>
+      </button>
     </div>
   </div>
 
@@ -25,8 +31,9 @@
         <li *ngFor="let activity of item.activities"
           class="list-group-item text-center" 
           [appActivityColor]="activity"> 
-          {{ activity.name | uppercase }} 
-          <img *ngIf="activity.status === 1" src="../../assets/img/check_black.png" height="20" class="float-right">
+          {{ activity.name | uppercase }}
+          <mat-icon *ngIf="activity.status === 1" aria-hidden="false" class="float-right">done</mat-icon>
+          <mat-icon *ngIf="activity.status === 0" aria-hidden="false" class="float-right">close</mat-icon>
         </li>
       </ul>
     </span>
