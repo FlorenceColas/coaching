@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 const APP_ROUTE: Route[] = [
   { path: '', redirectTo: 'week', pathMatch: 'full' },
+  { path: 'day', loadChildren: './day-container/day.module#DayModule'},
   { path: 'logout', redirectTo: 'week' },
 ];
 
