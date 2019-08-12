@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { WeekActivities } from '../models/week-activities.model';
+import { WeekActivities } from './week-activities.model';
 
 @Injectable({
   providedIn: 'root'

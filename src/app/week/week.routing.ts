@@ -4,8 +4,8 @@ import { Route, RouterModule } from '@angular/router';
 import { WeekComponent } from './week.component';
 
 const WEEK_ROUTE: Route[] = [
-  { path: 'week', component: WeekComponent, pathMatch: 'full' },
-  { path: 'week/:id', component: WeekComponent }
+  { path: '', component: WeekComponent, pathMatch: 'full' },
+  { path: ':id', component: WeekComponent }
 ];
 
 @NgModule({

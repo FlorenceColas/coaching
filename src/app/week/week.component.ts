@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
-import { WeekActivities } from '../shared/models/week-activities.model';
-import { WeekService } from '../shared/services/week.service';
+import { WeekActivities } from './week-activities.model';
+import { WeekService } from './week.service';
 
 @Component({
   selector: 'app-week',
@@ -10,7 +10,7 @@ import { WeekService } from '../shared/services/week.service';
   styleUrls: ['./week.component.css']
 })
 export class WeekComponent implements OnInit {
-  public weekActivities: WeekActivities
+  public weekActivities: WeekActivities;
   public weekNumber: number;
 
   constructor(
@@ -28,11 +28,12 @@ export class WeekComponent implements OnInit {
       } else {
         this.weekNumber = this.getWeek(now);
       }
-    })
+    });
 
     this.weekService.weekActivities.subscribe( (weekActivities: WeekActivities) => {
       this.weekActivities = weekActivities;
     });
+
     this.weekService.getWeekActivities(this.weekNumber);
   }
 

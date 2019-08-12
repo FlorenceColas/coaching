@@ -1,7 +1,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <div *ngIf="weekActivities">
-  <div class="row">
+  <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
     <div class="col col-2">
       <button mat-icon-button color="primary" style="width: 160px" (click)="navigateToWeek(weekActivities.week.previous_week)">
         <mat-icon aria-hidden="false">navigate_before</mat-icon> Previous week
@@ -13,19 +13,19 @@
     </div>
     <div class="col col-2">
       <button mat-icon-button color="primary" class="float-right" style="width: 160px" (click)="navigateToWeek(weekActivities.week.next_week)">
-        Next week <mat-icon aria-hidden="false">navigate_next</mat-icon>
+        Next week<mat-icon aria-hidden="false">navigate_next</mat-icon>
       </button>
     </div>
   </div>
 
   <hr>
 
-  <div class="row">
+  <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
     <span [appBorder]="item.day.date_iso" *ngFor="let item of weekActivities.days; let index = index" class="col text-center">
       {{ item.day.day_label }} <br> {{ item.day.date | date:'dd/MM/yyyy' }}
     </span>
   </div>
-  <div class="row">
+  <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
     <span *ngFor="let item of weekActivities.days" class="col">
       <ul class="list-group">
         <li *ngFor="let activity of item.activities"

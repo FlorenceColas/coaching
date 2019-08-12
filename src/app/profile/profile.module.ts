@@ -10,7 +10,6 @@ import { ProfileComponent } from './profile.component';
   ],
   imports: [
     FormsModule,
-    ReactiveFormsModule,
     SharedModule
   ],
   providers: []

@@ -1,7 +1,6 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
-import { MaterialModule } from '../material.module';
 import { SharedModule } from '../shared/modules/shared.module';
 import { DayContainerComponent } from './day-container.component';
 import { DayRoutingModule } from './day.routing';
@@ -12,9 +11,6 @@ import { DayRoutingModule } from './day.routing';
   ],
   imports: [
     DayRoutingModule,
-    FormsModule,
-    MaterialModule,
-    ReactiveFormsModule,
     SharedModule
   ],
   providers: []
