@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
 import { JwtToken } from '../../models/jwt-token.model';
+import { WeekTools } from '../../../week/week.tools';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.jwtToken = jwtToken;
     });
 
-    this.weekNumber = this.getWeek(new Date().getTime());
+    this.weekNumber = WeekTools.getWeek(new Date().getTime());
   }
 
   ngOnDestroy(): void {

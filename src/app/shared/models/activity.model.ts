@@ -1,13 +1,15 @@
-export class Activity {
-	constructor(
-    public id: number, 
-    public category: number,
-    public comment: string,
-    public date: number,
-    public distance: number,
-    public planned: number,
-    public status: number,
-    public time: number,
-    public type: number
-	) {}
+export interface Activity {
+    id: number,
+    athleteUserId: number,
+    categoryId: number,
+    typeId: number,
+    week: number,
+    activityDay: number,
+    plannedContent: string,
+    plannedDistance: number,
+    plannedTime: number,
+    realisedContent: string,
+    realisedDistance: number,
+    realisedTime: number,
+    state: number
 }
