@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatInputModule, MatCardModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatSlideToggleModule, MatToolbarModule } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { 
+  MatButtonModule, 
+  MatInputModule, 
+  MatCardModule, 
+  MatCheckboxModule, 
+  MatFormFieldModule, 
+  MatIconModule, 
+  MatSlideToggleModule, 
+  MatToolbarModule 
+} from '@angular/material';
 
 const MATERIAL_MODULES = [
-  FlexLayoutModule,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
@@ -17,11 +23,7 @@ const MATERIAL_MODULES = [
 ];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    ...MATERIAL_MODULES
-  ],
+  imports: MATERIAL_MODULES,
   exports: MATERIAL_MODULES
 })
 export class MaterialModule { }

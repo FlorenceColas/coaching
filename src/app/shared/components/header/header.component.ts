@@ -1,9 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, LOCALE_ID, Inject } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
 import { JwtToken } from '../../models/jwt-token.model';
-import { WeekTools } from '../../../week/week.tools';
 
 @Component({
   selector: 'app-header',
@@ -13,16 +13,23 @@ import { WeekTools } from '../../../week/week.tools';
 export class HeaderComponent implements OnInit, OnDestroy {
   public jwtToken: JwtToken;
   public subscription: Subscription;
-  public weekNumber: number;
+  public weekNumber: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    @Inject(LOCALE_ID) protected localeId: string
+  ) { }
 
   ngOnInit() {
     this.subscription = this.authService.jwtToken.subscribe( (jwtToken: JwtToken) => {
       this.jwtToken = jwtToken;
     });
 
-    this.weekNumber = WeekTools.getWeek(new Date().getTime());
+    this.weekNumber = formatDate(
+      new Date().getTime(), 
+      'ww', 
+      this.localeId
+    );;
   }
 
   ngOnDestroy(): void {

@@ -1,4 +1,4 @@
 export interface JwtToken {
-    isAuthenticated: boolean;
-    jwt: string;
+  isAuthenticated: boolean;
+  jwt: string;
 }

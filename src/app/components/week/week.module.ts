@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '../shared/modules/shared.module';
 import { WeekComponent } from './week.component';
 import { WeekService } from './week.service';
+import { LayoutModule } from 'src/app/shared/modules/layout.module';
 
 @NgModule({
   declarations: [
     WeekComponent
   ],
   imports: [
-    SharedModule,
+    LayoutModule
   ],
   providers: [WeekService]
 })

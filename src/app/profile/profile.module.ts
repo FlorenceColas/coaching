@@ -1,8 +1,8 @@
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '../shared/modules/shared.module';
 import { ProfileComponent } from './profile.component';
+import { LayoutModule } from '../shared/modules/layout.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +10,7 @@ import { ProfileComponent } from './profile.component';
   ],
   imports: [
     FormsModule,
-    SharedModule
+    LayoutModule,
   ],
   providers: []
 })

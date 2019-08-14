@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { formatDate } from '@angular/common';
 
 import { WeekActivities } from './week-activities.model';
 import { WeekService } from './week.service';
-import { WeekTools } from './week.tools';
-import { Globals } from '../global';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-week',
@@ -20,15 +18,19 @@ export class WeekComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private weekService: WeekService,
-    private globals: Globals
+    @Inject(LOCALE_ID) protected localeId: string
   ) { }
-
+  
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe( (params: ParamMap) => {
       if (params.get("id")) {
         this.weekNumber = params.get("id");
       } else {
-        this.weekNumber = this.globals.currentWeek;
+        this.weekNumber = formatDate(
+          new Date().getTime(), 
+          'ww', 
+          this.localeId
+        );
       }
     });
 

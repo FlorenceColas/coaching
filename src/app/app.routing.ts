@@ -5,7 +5,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 const APP_ROUTE: Route[] = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomepageComponent },
-  { path: 'week', loadChildren: './week/week.module#WeekModule' },
+  { path: 'week', loadChildren: './components/week/week.module#WeekModule' },
 //  { path: 'day', loadChildren: './day-container/day.module#DayModule'},
   { path: 'logout', redirectTo: 'home' },
 ];
