@@ -1,14 +1,26 @@
+// native
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
 
+// ngrx
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers } from './shared/store';
+import { environment } from 'src/environments/environment';
+import { AuthEffects } from './shared/store/effects/auth.effect';
+
+// components
 import { AppComponent } from './app.component';
+
+// routing
 import { AppRoutingModule } from './app.routing';
-import { WeekModule } from './components/week/week.module';
 import { WeekRoutingModule } from './components/week/week.routing';
-import { reducers } from './store';
+
+// modules
 import { CoreModule } from './shared/modules/core.module';
+import { WeekModule } from './components/week/week.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +31,11 @@ import { CoreModule } from './shared/modules/core.module';
     BrowserModule,
     CoreModule,
     StoreModule.forRoot(reducers),
-
+    EffectsModule.forRoot([AuthEffects]),
+    StoreDevtoolsModule.instrument({
+      name: 'coaching',
+      logOnly: environment.production
+    }),
     AppRoutingModule,
     WeekModule,
     WeekRoutingModule,

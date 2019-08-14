@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Week } from './week-activities.model';
+import { Week } from '../../../components/week/week-activities.model';
 
 export interface WeekState {
   datas: Week[],

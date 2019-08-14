@@ -9,11 +9,13 @@ import { AuthGuard} from '../../shared/guards/auth.guard';
 import { AuthService } from '../../shared/services/auth.service';
 import { HomepageComponent } from '../../homepage/homepage.component';
 import { HeaderComponent } from '../../shared/components/header/header.component';
+import { SigninComponent } from '../../components/signin/signin.component';
 import { LayoutModule } from './layout.module';
  
 const COMPONENTS = [
   HeaderComponent,
   HomepageComponent,
+  SigninComponent,
 ];
 
 @NgModule({
