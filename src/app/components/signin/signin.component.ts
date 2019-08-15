@@ -14,7 +14,7 @@ import { errorAuthSelector } from 'src/app/shared/store/selectors/auth.selectors
 })
 export class SigninComponent implements OnInit {
   public form: FormGroup;
-  public errors$: Observable<string>;
+  public error$: Observable<string>;
 
   constructor(
       private fb: FormBuilder,
@@ -22,7 +22,7 @@ export class SigninComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.errors$ = this.store.pipe(
+    this.error$ = this.store.pipe(
       select(errorAuthSelector)
     );
 

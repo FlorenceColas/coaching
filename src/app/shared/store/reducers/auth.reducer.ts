@@ -1,4 +1,3 @@
-import { Action } from '@ngrx/store';
 import { User } from '../../models/user.model';
 import { AuthActions, AuthActionTypes } from '../actions/auth.actions';
 
@@ -18,10 +17,18 @@ export const initialAuthState: AuthState = {
 
 export function authReducer(state: AuthState = initialAuthState, action: AuthActions): AuthState {
   switch (action.type) {
-    case AuthActionTypes.SigninError:
+    case AuthActionTypes.SIGNIN_ERROR:
       return {
         ...state,
         error: action.payload
       }
+    case AuthActionTypes.SIGNIN_SUCCESS:
+      return {
+        ...state,
+        token: action.payload,
+        isLoggedin: true,
+        error: null
+      }
   }
+  return state;
 };
