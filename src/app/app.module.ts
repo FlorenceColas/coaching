@@ -16,11 +16,11 @@ import { AppComponent } from './app.component';
 
 // routing
 import { AppRoutingModule } from './app.routing';
-import { WeekRoutingModule } from './components/week/week.routing';
 
 // modules
 import { CoreModule } from './shared/modules/core.module';
 import { WeekModule } from './components/week/week.module';
+import { ProfileModule } from './components/profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -37,8 +37,8 @@ import { WeekModule } from './components/week/week.module';
       logOnly: environment.production
     }),
     AppRoutingModule,
+    ProfileModule,
     WeekModule,
-    WeekRoutingModule,
   ],
   bootstrap: [AppComponent]
 })

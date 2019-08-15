@@ -5,10 +5,12 @@ import { map, switchMap, exhaustMap, catchError, tap, withLatestFrom } from 'rxj
 import { of, empty, Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
-import { TrySignin, AuthActionTypes, SigninSuccess, SigninError, TryRefreskToken, Logout } from '../actions/auth.actions';
+import { TrySignin, AuthActionTypes, SigninSuccess, SigninError, TryRefreskToken, Logout, TryFetchCurrentUser, SetCurrentUser } from '../actions/auth.actions';
 import { Store, select } from '@ngrx/store';
 import { State } from '..';
 import { tokenSelector } from '../selectors/auth.selectors';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
 
 @Injectable()
 export class AuthEffects {
@@ -17,6 +19,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private store: Store<State>
   ) {}
@@ -30,7 +33,7 @@ export class AuthEffects {
         this.subscription = null;
       }
       localStorage.removeItem('jwt');
-      this.router.navigate(['/signin']);
+      this.router.navigate(['/']);
     })
   );
 
@@ -44,6 +47,17 @@ export class AuthEffects {
         this.subscription = this.authService.initTimer().subscribe();
         this.router.navigate(['/']);
       }
+    })
+  );
+
+  @Effect()
+  tryFetchCurrentUser$ = this.actions$.pipe(
+    ofType<TryFetchCurrentUser>(AuthActionTypes.TRY_FETCH_CURRENT_USER),
+    switchMap( () => this.userService.getCurrentUser()),
+    map( (user: User) => new SetCurrentUser(user)),
+    catchError( (err: any) => {
+      console.log(err);
+      return empty();
     })
   );
 

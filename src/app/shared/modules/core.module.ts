@@ -7,10 +7,11 @@ import { RouterModule } from '@angular/router';
 import { AuthInterceptor } from '../../shared/interceptors/auth.interceptor';
 import { AuthGuard} from '../../shared/guards/auth.guard';
 import { AuthService } from '../../shared/services/auth.service';
-import { HomepageComponent } from '../../homepage/homepage.component';
+import { HomepageComponent } from '../../components/homepage/homepage.component';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { SigninComponent } from '../../components/signin/signin.component';
 import { LayoutModule } from './layout.module';
+import { UserService } from '../../shared/services/user.service';
  
 const COMPONENTS = [
   HeaderComponent,
@@ -40,6 +41,7 @@ const COMPONENTS = [
       provide: LOCALE_ID, 
       useValue: 'en_GB'
     },
+    UserService,
   ]
 })
 export class CoreModule { }

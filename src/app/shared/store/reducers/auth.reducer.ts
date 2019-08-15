@@ -37,6 +37,11 @@ export function authReducer(state: AuthState = initialAuthState, action: AuthAct
         isLoggedin: true,
         error: null
       }
+    case AuthActionTypes.SET_CURRENT_USER:
+      return {
+        ...state,
+        user: action.payload
+      }
   }
   return state;
 };

@@ -28,6 +28,16 @@ export const isLoggedinSelector = createSelector(
     if (authState) {
       return authState.isLoggedin;
     } else {
+      return false;
+    }
+  }
+);
+export const currentUserSelector = createSelector(
+  authSelector,
+  (authState: AuthState) => {
+    if (authState) {
+      return authState.user;
+    } else {
       return null;
     }
   }
