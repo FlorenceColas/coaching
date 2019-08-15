@@ -8,7 +8,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 const APP_ROUTE: Route[] = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
-  { path: 'home', canActivate: [AuthGuard], component: HomepageComponent },
+  { path: 'home', component: HomepageComponent },
   { path: 'week', canActivate: [AuthGuard], loadChildren: './components/week/week.module#WeekModule' },
   { path: 'logout', canActivate: [AuthGuard], redirectTo: 'signin' },
 ];

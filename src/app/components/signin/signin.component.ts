@@ -22,9 +22,7 @@ export class SigninComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.error$ = this.store.pipe(
-      select(errorAuthSelector)
-    );
+    this.error$ = this.store.pipe(select(errorAuthSelector));
 
     this.form = this.fb.group({
       username: [''],

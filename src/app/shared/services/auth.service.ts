@@ -29,7 +29,7 @@ export class AuthService {
       private router: Router,
       private store: Store<State>
   ) {
-    this.initToken();
+    //this.initToken();
   }
 
   public initTimer()  {
@@ -53,16 +53,6 @@ export class AuthService {
         jwt: null
       });
     }
-  }
-
-  public logout(): void {
-    this.jwtToken.next({
-      isAuthenticated: false,
-      jwt: null
-    });
-    localStorage.removeItem('jwt');
-
-    this.router.navigate(['/signin']);
   }
 
   public refreshToken() {

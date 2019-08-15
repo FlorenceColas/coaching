@@ -17,6 +17,14 @@ export const initialAuthState: AuthState = {
 
 export function authReducer(state: AuthState = initialAuthState, action: AuthActions): AuthState {
   switch (action.type) {
+    case AuthActionTypes.LOGOUT:
+      return {
+        ...state,
+        isLoggedin: false,
+        token: null,
+        error: null,
+        user: null
+      }
     case AuthActionTypes.SIGNIN_ERROR:
       return {
         ...state,
