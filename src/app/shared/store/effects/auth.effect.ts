@@ -1,11 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
-import { map, switchMap, exhaustMap, catchError, tap } from 'rxjs/operators';
+import { map, switchMap, exhaustMap, catchError, tap, withLatestFrom } from 'rxjs/operators';
 import { of, empty, Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
 import { TrySignin, AuthActionTypes, SigninSuccess, SigninError, TryRefreskToken, Logout } from '../actions/auth.actions';
+import { Store, select } from '@ngrx/store';
+import { State } from '..';
+import { tokenSelector } from '../selectors/auth.selectors';
 
 @Injectable()
 export class AuthEffects {
@@ -14,7 +17,8 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private store: Store<State>
   ) {}
 
   @Effect({ dispatch: false})
@@ -46,17 +50,24 @@ export class AuthEffects {
   @Effect()
   tryRefreshToken$ = this.actions$.pipe(
     ofType<TryRefreskToken>(AuthActionTypes.TRY_REFRESH_TOKEN),
-    switchMap( () => this.authService.refreshToken().pipe(
-      map( (token: string) => new SigninSuccess(token)),
-      catchError( () => {
-        localStorage.removeItem('jwt');
-        if (this.subscription) {
-          this.subscription.unsubscribe();
-        }
+    withLatestFrom(this.store.pipe(select(tokenSelector))),
+    switchMap( ([action, token]) => {
+      if (token) {
+        return this.authService.refreshToken().pipe(
+          map( (newToken: string) => new SigninSuccess(newToken)),
+          catchError( () => {
+            localStorage.removeItem('jwt');
+            if (this.subscription) {
+              this.subscription.unsubscribe();
+            }
+            return empty();
+          })
+        )
+      } else {
         return empty();
-      })
-    ))
-  );
+      }
+    }
+  ));
 
   @Effect()
   trySignin$ = this.actions$.pipe(

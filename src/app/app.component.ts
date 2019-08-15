@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { State } from './shared/store';
+import { TryRefreskToken } from './shared/store/actions/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'coaching';
+  constructor(private store: Store<State>) {
+    this.store.dispatch(new TryRefreskToken());
+  }
 }
