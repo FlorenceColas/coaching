@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { Store, select } from '@ngrx/store';
 import { State } from '../store';
 import { tokenSelector } from '../store/selectors/auth.selectors';
-import { catchError, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +24,19 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.getFromStore().pipe(
-      switchMap((token: string) => of(true)),
-      catchError(() => {
-        this.router.navigate(['/signin']);
-        return of(false);
+      switchMap((token: string) => {
+        if (token) {
+          return of(true);
+        } else {
+          this.router.navigate(['/signin']);
+          return of(false);
+        }
       })
     );
   }
 }
+
+
+
+
+
