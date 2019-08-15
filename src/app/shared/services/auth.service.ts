@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 
 import { User } from '../models/user.model';
 import { JwtToken } from '../models/jwt-token.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class AuthService {
   public subscription: Subscription;
 
   constructor(
-      private http: HttpClient
+      private http: HttpClient,
+      private router: Router
   ) {
     this.initToken();
     this.subscription = this.initTimer();
@@ -79,6 +81,8 @@ export class AuthService {
       jwt: null
     });
     localStorage.removeItem('jwt');
+
+    this.router.navigate(['/signin']);
   }
 
   public signIn(credentials: { username: string, password: string }): Observable<string> {
