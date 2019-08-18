@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { State } from '../../store';
 import { isLoggedinSelector } from '../../store/selectors/auth.selectors';
 import { Logout } from '../../store/actions/auth.actions';
+import { currentWeekNumberSelector, currentWeekYearSelector } from '../../store/selectors/week.selectors';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,8 @@ import { Logout } from '../../store/actions/auth.actions';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  public weekNumber: string;
+  public currentWeekNumber$: Observable<string>;
+  public currentWeekYear$: Observable<string>;
   public isLoggedin$: Observable<boolean>;
 
   constructor(
@@ -22,13 +24,9 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.currentWeekNumber$ = this.store.pipe(select(currentWeekNumberSelector));
+    this.currentWeekYear$ = this.store.pipe(select(currentWeekYearSelector));
     this.isLoggedin$ = this.store.pipe(select(isLoggedinSelector));
-
-    this.weekNumber = formatDate(
-      new Date().getTime(), 
-      'ww', 
-      this.localeId
-    );;
   }
 
   public logout(): void {

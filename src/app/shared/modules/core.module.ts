@@ -41,7 +41,7 @@ const COMPONENTS = [
       provide: LOCALE_ID, 
       useValue: 'en_GB'
     },
-    UserService,
+    UserService
   ]
 })
 export class CoreModule { }

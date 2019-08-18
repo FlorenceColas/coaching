@@ -5,7 +5,7 @@
       <span class="link" [routerLink]="'/signin'"> Sign in </span>
     </span>
     <span *ngIf="isLoggedin$ | async" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-      <span class="link" [routerLink]="'/week/' + weekNumber"> Week </span>
+      <span class="link" [routerLink]="'/week/' + (currentWeekNumber$ | async) + '/' + (currentWeekYear$ | async)"> Week </span>
       <span class="link" [routerLink]="'/profile'"> My profile </span>
       <mat-icon class="link" (click)="logout()">power_settings_new</mat-icon>
     </span>

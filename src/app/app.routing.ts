@@ -6,7 +6,7 @@ import { SigninComponent } from './components/signin/signin.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 
 const APP_ROUTE: Route[] = [
-  { path: '', component: HomepageComponent},
+  { path: '', component: HomepageComponent },
   { path: 'signin', component: SigninComponent },
   { 
     path: 'profile', 

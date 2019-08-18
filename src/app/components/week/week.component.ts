@@ -1,48 +1,71 @@
-import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, LOCALE_ID, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { Observable, Subscription } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
 import { WeekActivities } from './week-activities.model';
-import { WeekService } from './week.service';
-import { formatDate } from '@angular/common';
+import { State } from 'src/app/shared/store';
+import { RouterStateUrl } from 'src/app/shared/store/helpers/router.helper';
+import { routerStateSelector } from 'src/app/shared/store/selectors/router.selectors';
+import { Week } from 'src/app/shared/store/reducers/week.reducer';
+import { weekDetailsSelector } from 'src/app/shared/store/selectors/week.selectors';
+import { FetchWeekActivities, SetWeekDetails } from 'src/app/shared/store/actions/week.actions';
+import { DateTools } from 'src/app/shared/classes/date-tools.classes';
+import { Activity } from 'src/app/shared/models/activity.model';
 
 @Component({
   selector: 'app-week',
   templateUrl: './week.component.html',
   styleUrls: ['./week.component.css']
 })
-export class WeekComponent implements OnInit {
+export class WeekComponent implements OnInit, OnDestroy {
   public weekActivities: WeekActivities;
   public weekNumber: string;
+  public year: string;
+  public week$: Observable<Week>;
+  public weekActivities$: Observable<Activity[]>;
+  private subscription: Subscription;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private router: Router,
-    private weekService: WeekService,
-    @Inject(LOCALE_ID) protected localeId: string
+    @Inject(LOCALE_ID) protected localeId: string,
+    private store: Store<State>
   ) { }
   
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe( (params: ParamMap) => {
-      if (params.get("id")) {
-        this.weekNumber = params.get("id");
-      } else {
-        this.weekNumber = formatDate(
-          new Date().getTime(), 
-          'ww', 
-          this.localeId
-        );
-      }
+    this.subscription = this.store.pipe(select(routerStateSelector)).subscribe( (routerStateUrl: RouterStateUrl) => {
+      this.weekNumber = routerStateUrl.params.id;
+      this.year = routerStateUrl.queryParams.year;
     });
 
-    this.weekService.weekActivities.subscribe( (weekActivities: WeekActivities) => {
-      this.weekActivities = weekActivities;
-    });
+    this.week$ = this.store.pipe(select(weekDetailsSelector));
 
-    this.weekService.getWeekActivities(this.weekNumber);
+    this.store.dispatch(new FetchWeekActivities({ week: this.weekNumber, year: this.year }));
   }
 
-  navigateToWeek(weekNumber: string) {
-    this.weekService.getWeekActivities(weekNumber);
-    this.router.navigate(['week', weekNumber]);
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  navigateToWeek(w: { week: string, year: string }) {
+    var selectedDate = moment().day("Tuesday").year(parseInt(w.year)).week(parseInt(w.week));
+    var weekStart = selectedDate.clone().startOf('isoWeek').format('x');
+    var weekEnd = selectedDate.clone().endOf('isoWeek').format('x');
+
+    const weekDetails: Week = {
+      nextWeek: DateTools.getNextWeek(w.week, w.year),
+      number: w.week,
+      previousWeek: DateTools.getPreviousWeek(w.week, w.year),
+      rangeFrom: weekStart,
+      rangeTo: weekEnd,
+      year: w.year
+    };
+
+    this.store.dispatch(new SetWeekDetails(weekDetails));
+
+    this.store.dispatch(new FetchWeekActivities(w));
+
+    this.router.navigate(['/week', w.week, w.year]);
   }
 }

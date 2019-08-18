@@ -1,22 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { WeekActivities } from './week-activities.model';
+import { Activity } from 'src/app/shared/store/reducers/week.reducer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeekService {
-  public weekActivities = new BehaviorSubject<WeekActivities>(null);
+  private uri: string = 'http://coaching-back.localhost';
 
   constructor(private http: HttpClient) {}
 
-  getWeekActivities(weekNumber: string): void {
-    this.http.get<WeekActivities>('http://localhost:4200/assets/week-activities' + weekNumber + '.json').subscribe( 
-      (weekActivities: WeekActivities) => {
-        this.weekActivities.next(weekActivities);
-      }
-    );
+  public fetchActivities(week: string, year: string): Observable<Activity[]> {
+    return this.http.get<Activity[]>(this.uri + '/api/rest/v1/week-activities/week?year=' + year);
   }
 }

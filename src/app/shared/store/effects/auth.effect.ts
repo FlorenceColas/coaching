@@ -90,7 +90,7 @@ export class AuthEffects {
     exhaustMap( (credentials: { username: string, password: string }) => 
       this.authService.signIn(credentials).pipe(
         map( (token: string) => new SigninSuccess(token) ),
-        catchError( (err: any) => of(new SigninError(err)) )
+        catchError( (err: any) => of(new SigninError(err.error)) )
       )
     )
   );

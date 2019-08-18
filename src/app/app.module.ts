@@ -10,6 +10,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './shared/store';
 import { environment } from 'src/environments/environment';
 import { AuthEffects } from './shared/store/effects/auth.effect';
+import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 
 // components
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { AppRoutingModule } from './app.routing';
 import { CoreModule } from './shared/modules/core.module';
 import { WeekModule } from './components/week/week.module';
 import { ProfileModule } from './components/profile/profile.module';
+import { MyRouterStateSerializer } from './shared/store/helpers/router.helper';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { ProfileModule } from './components/profile/profile.module';
     CoreModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([AuthEffects]),
+    StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
       name: 'coaching',
       logOnly: environment.production
@@ -39,6 +42,12 @@ import { ProfileModule } from './components/profile/profile.module';
     AppRoutingModule,
     ProfileModule,
     WeekModule,
+  ],
+  providers: [
+    {
+      provide: RouterStateSerializer,
+      useClass: MyRouterStateSerializer
+    }
   ],
   bootstrap: [AppComponent]
 })
