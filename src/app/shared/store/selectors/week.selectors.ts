@@ -16,7 +16,7 @@ export const currentWeekNumberSelector = createSelector(
   weekSelector,
   (weekState: WeekState) => {
     if (weekState) {
-      return weekState.currentWeek.number;
+      return weekState.currentWeek.week;
     } else {
       return null;
     }

@@ -1,15 +1,7 @@
 import { WeekActions, WeekActionTypes } from '../actions/week.actions';
 
-export interface WeekState {
-  week: Week,
-  days: {
-    [day: number]: Activity,
-  },
-  currentWeek: CurrentWeek
-}
-
 export interface CurrentWeek {
-  number: string,
+  week: string,
   year: string,
 }
 
@@ -34,6 +26,7 @@ export interface Activity {
   categoryId: number,
   typeId: number,
   activityDay: number,
+  dayOfWeek: number,
   plannedContent: string,
   plannedDistance: number,
   plannedTime: number,
@@ -41,6 +34,12 @@ export interface Activity {
   realisedDistance: number,
   realisedTime: number,
   state: number
+}
+
+export interface WeekState {
+  week: Week,
+  days: Activity[],
+  currentWeek: CurrentWeek
 }
 
 export const initialWeekState: WeekState = {

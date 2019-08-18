@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { empty } from "rxjs";
-import { Store } from "@ngrx/store";
 
 import { WeekService } from '../../../components/week/week.service';
 import { State } from '..';
@@ -14,21 +12,26 @@ import { Activity } from "../reducers/week.reducer";
 export class WeekEffets {
   constructor(
     private actions$: Actions,
-    private weekService: WeekService,
-    private router: Router,
-    private store: Store<State>
+    private weekService: WeekService
   ) {}
 
   @Effect()
   fetchWeekActivities$ = this.actions$.pipe(
     ofType<FetchWeekActivities>(WeekActionTypes.FETCH_WEEK_ACTIVITIES),
     switchMap( (action: FetchWeekActivities) => this.weekService.fetchActivities(action.payload.week, action.payload.year)),
-    map( (activities: Activity[]) => {      return new SetWeekActivities(activities)
+    map( (activities: Activity[]) => {
+/*      console.log(activities);
+      let newA: Activity[] = [];
+      for (let activity in activities) {
+        newA.push(activities[activity]);
+      }
+
+      console.log(newA);*/
+      return new SetWeekActivities(activities) 
     }),
     catchError( (err: any) => {
       console.log(err);
       return empty();
     })
   );
-
 }

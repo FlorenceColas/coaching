@@ -4,15 +4,13 @@ import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
-import { WeekActivities } from './week-activities.model';
 import { State } from 'src/app/shared/store';
 import { RouterStateUrl } from 'src/app/shared/store/helpers/router.helper';
 import { routerStateSelector } from 'src/app/shared/store/selectors/router.selectors';
-import { Week } from 'src/app/shared/store/reducers/week.reducer';
-import { weekDetailsSelector } from 'src/app/shared/store/selectors/week.selectors';
-import { FetchWeekActivities, SetWeekDetails } from 'src/app/shared/store/actions/week.actions';
+import { Week, Activity } from 'src/app/shared/store/reducers/week.reducer';
+import { weekDetailsSelector, weekDaysSelector } from 'src/app/shared/store/selectors/week.selectors';
+import { FetchWeekActivities, SetWeekDetails, SetCurrentWeek } from 'src/app/shared/store/actions/week.actions';
 import { DateTools } from 'src/app/shared/classes/date-tools.classes';
-import { Activity } from 'src/app/shared/models/activity.model';
 
 @Component({
   selector: 'app-week',
@@ -20,7 +18,6 @@ import { Activity } from 'src/app/shared/models/activity.model';
   styleUrls: ['./week.component.css']
 })
 export class WeekComponent implements OnInit, OnDestroy {
-  public weekActivities: WeekActivities;
   public weekNumber: string;
   public year: string;
   public week$: Observable<Week>;
@@ -35,13 +32,15 @@ export class WeekComponent implements OnInit, OnDestroy {
   
   ngOnInit() {
     this.subscription = this.store.pipe(select(routerStateSelector)).subscribe( (routerStateUrl: RouterStateUrl) => {
-      this.weekNumber = routerStateUrl.params.id;
-      this.year = routerStateUrl.queryParams.year;
+      this.weekNumber = routerStateUrl.params.week;
+      this.year = routerStateUrl.params.year;
     });
 
     this.week$ = this.store.pipe(select(weekDetailsSelector));
 
     this.store.dispatch(new FetchWeekActivities({ week: this.weekNumber, year: this.year }));
+
+    this.weekActivities$ = this.store.pipe(select(weekDaysSelector));
   }
 
   ngOnDestroy() {
@@ -62,8 +61,8 @@ export class WeekComponent implements OnInit, OnDestroy {
       year: w.year
     };
 
+    this.store.dispatch(new SetCurrentWeek(w));
     this.store.dispatch(new SetWeekDetails(weekDetails));
-
     this.store.dispatch(new FetchWeekActivities(w));
 
     this.router.navigate(['/week', w.week, w.year]);

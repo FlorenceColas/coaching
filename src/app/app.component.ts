@@ -24,7 +24,7 @@ export class AppComponent {
     const week = moment(new Date().getTime()).isoWeek();
     const year = moment(new Date().getTime()).year();
 
-    this.store.dispatch(new SetCurrentWeek({ number: week.toString(), year: year.toString() }));
+    this.store.dispatch(new SetCurrentWeek({ week: week.toString(), year: year.toString() }));
 
     var selectedDate = moment().day("Tuesday").year(year).week(week);
     var weekStart = selectedDate.clone().startOf('isoWeek').format('x');

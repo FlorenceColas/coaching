@@ -1,5 +1,4 @@
-import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
-import { formatDate } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -19,7 +18,6 @@ export class HeaderComponent implements OnInit {
   public isLoggedin$: Observable<boolean>;
 
   constructor(
-    @Inject(LOCALE_ID) protected localeId: string,
     private store: Store<State>
   ) { }
 

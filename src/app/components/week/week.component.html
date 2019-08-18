@@ -22,7 +22,7 @@
   <div *ngIf="(weekActivities$ | async); let weekActivities">
     <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
       <span *ngFor="let item of weekActivities; let index = index" [appBorder]="item.activityDay"  class="col text-center">
-        {{ item.activityDay }} <br> {{ item.activityDay | date:'dd/MM/yyyy' }}
+        {{ item.activityDay | date:'EEEE' }} <br> {{ item.activityDay | date:'dd/MM/yyyy' }}
       </span>
     </div>
     <!--

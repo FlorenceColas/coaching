@@ -15,6 +15,6 @@ export class HomepageComponent implements OnInit {
   }
 
   changeWeek(week: string) {
-    this.store.dispatch(new SetCurrentWeek({number: '34', year: '2019'}));
+    this.store.dispatch(new SetCurrentWeek({ week: '34', year: '2019' }));
   }
 }

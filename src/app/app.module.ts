@@ -23,6 +23,7 @@ import { CoreModule } from './shared/modules/core.module';
 import { WeekModule } from './components/week/week.module';
 import { ProfileModule } from './components/profile/profile.module';
 import { MyRouterStateSerializer } from './shared/store/helpers/router.helper';
+import { WeekEffets } from './shared/store/effects/week.effect';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,10 @@ import { MyRouterStateSerializer } from './shared/store/helpers/router.helper';
     BrowserModule,
     CoreModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([
+      AuthEffects, 
+      WeekEffets
+    ]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
       name: 'coaching',
