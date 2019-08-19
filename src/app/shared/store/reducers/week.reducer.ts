@@ -23,7 +23,7 @@ export interface Week {
 export interface Activity {
   id: number,
   athleteUserId: number,
-  categoryId: number,
+  categoryId: string,
   typeId: number,
   activityDay: number,
   dayOfWeek: number,
@@ -38,7 +38,13 @@ export interface Activity {
 
 export interface WeekState {
   week: Week,
-  days: Activity[],
+  days: {
+    day: {
+      day: number,
+      date: number,
+    }
+    activities: Activity[]
+  }[],
   currentWeek: CurrentWeek
 }
 

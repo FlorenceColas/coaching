@@ -1,6 +1,5 @@
 import { Component, LOCALE_ID, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { formatDate } from '@angular/common';
 import * as moment from 'moment';
 
 import { State } from './shared/store';

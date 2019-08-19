@@ -1,4 +1,5 @@
 import { Directive, HostBinding, Input, OnInit } from '@angular/core';
+import * as moment from 'moment';
 
 @Directive({
   selector: '[appBorder]'
@@ -10,8 +11,7 @@ export class BorderDirective implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const currentDay = new Date().toISOString().slice(0, 10);
-
+    const currentDay = moment(new Date()).clone().format('DD/MM/YYYY');
     if (this.day === currentDay) {
       this.displayBorder = true;
     }

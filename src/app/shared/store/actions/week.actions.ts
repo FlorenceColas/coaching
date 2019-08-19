@@ -20,7 +20,7 @@ export class SetCurrentWeek implements Action {
 
 export class SetWeekActivities implements Action {
   readonly type = WeekActionTypes.SET_WEEK_ACTIVITIES
-  constructor(public payload: Activity[]) {}
+  constructor(public payload: { day: { day: number, date: number }, activities: Activity[] }[]) {}
 }
 
 export class SetWeekDetails implements Action {

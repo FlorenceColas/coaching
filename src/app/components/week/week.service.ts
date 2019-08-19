@@ -4,6 +4,12 @@ import { Observable, of } from 'rxjs';
 
 import { Activity } from 'src/app/shared/store/reducers/week.reducer';
 
+export interface ServiceResult {
+  week: string,
+  year: string,
+  activities: Activity[]
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +18,7 @@ export class WeekService {
 
   constructor(private http: HttpClient) {}
 
-  public fetchActivities(week: string, year: string): Observable<Activity[]> {
-    return this.http.get<Activity[]>(this.uri + '/api/rest/v1/week-activities/' + week + '/' + year + '/1');
+  public fetchActivities(week: string, year: string): Observable<ServiceResult> {
+    return this.http.get<ServiceResult>(this.uri + '/api/rest/v1/week-activities/' + week + '/' + year + '/1');
   }
 }

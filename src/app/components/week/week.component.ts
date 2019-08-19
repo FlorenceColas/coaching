@@ -8,7 +8,7 @@ import { State } from 'src/app/shared/store';
 import { RouterStateUrl } from 'src/app/shared/store/helpers/router.helper';
 import { routerStateSelector } from 'src/app/shared/store/selectors/router.selectors';
 import { Week, Activity } from 'src/app/shared/store/reducers/week.reducer';
-import { weekDetailsSelector, weekDaysSelector } from 'src/app/shared/store/selectors/week.selectors';
+import { weekDetailsSelector, weekDaysSelector, weekDaysListSelector } from 'src/app/shared/store/selectors/week.selectors';
 import { FetchWeekActivities, SetWeekDetails, SetCurrentWeek } from 'src/app/shared/store/actions/week.actions';
 import { DateTools } from 'src/app/shared/classes/date-tools.classes';
 
@@ -21,8 +21,9 @@ export class WeekComponent implements OnInit, OnDestroy {
   public weekNumber: string;
   public year: string;
   public week$: Observable<Week>;
-  public weekActivities$: Observable<Activity[]>;
+  public weekActivities$: Observable<{ day: { day: number, date: number }, activities: Activity[] }[]>;
   private subscription: Subscription;
+  public listOfActivities$: Observable<{ name: string, status: number, planned: number}[]>; 
 
   constructor(
     private router: Router,
@@ -41,6 +42,7 @@ export class WeekComponent implements OnInit, OnDestroy {
     this.store.dispatch(new FetchWeekActivities({ week: this.weekNumber, year: this.year }));
 
     this.weekActivities$ = this.store.pipe(select(weekDaysSelector));
+    this.listOfActivities$ = this.store.pipe(select(weekDaysListSelector));
   }
 
   ngOnDestroy() {

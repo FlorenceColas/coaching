@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { WeekState } from '../reducers/week.reducer';
+import { WeekState, Activity } from '../reducers/week.reducer';
+import { of } from 'rxjs';
 
 export const weekSelector = createFeatureSelector('week');
 export const currentWeekSelector = createSelector(
@@ -49,6 +50,48 @@ export const weekDaysSelector = createSelector(
       return weekState.days;
     } else {
       return null;
+    }
+  }
+);
+export const weekDaysListSelector = createSelector(
+  weekDaysSelector, 
+  (dayState: {
+    day: {
+      day: number,
+      date: number,
+    }
+    activities: Activity[]
+  }[]) => {
+    enum Categories {
+      'off',
+      'swim',
+      'bike',
+      'run',
+      'fitness',
+      'race'
+    };
+
+    let list: { name: string, status: number, planned: number}[] = new Array;
+    const nb = Object.values(Categories).length / 2;
+
+    if (dayState) {
+      dayState.forEach(element => {
+        element.activities
+      });
+
+      Object.values(Categories).forEach( (value, index) => {
+        if (index < nb) {
+          list.push({ name: value, status: 0, planned: 0 });
+        }
+      });
+      console.log(list);
+      return list;
+    } else {
+      Object.keys(Categories).forEach(element => {
+        list.push({ name: element, status: 0, planned: 0 });
+      });
+      console.log(list);
+      return list;
     }
   }
 );

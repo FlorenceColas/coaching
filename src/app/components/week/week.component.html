@@ -19,26 +19,41 @@
   </div>
 
   <hr>
+<!--  public weekActivities$: Observable<{ day: { day: number, date: number }, activities: Activity[] }[]>;-->
   <div *ngIf="(weekActivities$ | async); let weekActivities">
     <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
-      <span *ngFor="let item of weekActivities; let index = index" [appBorder]="item.activityDay"  class="col text-center">
-        {{ item.activityDay | date:'EEEE' }} <br> {{ item.activityDay | date:'dd/MM/yyyy' }}
+      <span *ngFor="let w of weekActivities; let index = index" [appBorder]="w.day.date | date:'dd/MM/yyyy'"  class="col text-center">
+        {{ w.day.date | date:'EEEE' }} <br> {{ w.day.date | date:'dd/MM/yyyy' }}
       </span>
     </div>
-    <!--
     <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
-      <span *ngFor="let item of weekActivities.days" class="col">
+      <span *ngFor="let element of listOfActivities$ | async" class="col">
         <ul class="list-group">
-          <li *ngFor="let activity of item.activities"
-            class="list-group-item text-center" 
-            [appActivityColor]="activity"> 
-            {{ activity.name | uppercase }}
-            <mat-icon *ngIf="activity.status === 1" aria-hidden="false" class="float-right">done</mat-icon>
-            <mat-icon *ngIf="activity.status === 0" aria-hidden="false" class="float-right">close</mat-icon>
+          <li class="list-group-item text-center" 
+            [appActivityColor]="element"> 
+            {{ element | uppercase }}
+            <mat-icon *ngIf="element.status === 0" aria-hidden="false" class="float-right">close</mat-icon>
+            <mat-icon *ngIf="element.status === 1" aria-hidden="false" class="float-right">done</mat-icon>
+            <mat-icon *ngIf="element.status === 2" aria-hidden="false" class="float-right">done</mat-icon>
           </li>
         </ul>
       </span>
+<!--      <span *ngFor="let w of weekActivities" class="col">
+          <ul class="list-group">
+            <li *ngFor="let activity of listOfActivities; let i = index"
+              class="list-group-item text-center" 
+              [appActivityColor]="{ name: activity, status: 1, planned: 1}"> 
+              {{ activity | uppercase }}
+              <span *ngFor="let act of w.activities">
+                <span *ngIf="act.categoryId === activity">
+                  <mat-icon *ngIf="act.state === '1'" aria-hidden="false" class="float-right">done</mat-icon>
+                  <mat-icon *ngIf="act.state === '0'" aria-hidden="false" class="float-right">close</mat-icon>
+                </span>
+              </span>
+            </li>
+          </ul>
+        </span>
+      -->      
     </div>
-    -->
   </div>
 </div>  
