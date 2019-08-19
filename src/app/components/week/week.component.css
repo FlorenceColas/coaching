@@ -3,9 +3,19 @@
   color: white;
   font-weight: bold;
 }
+.activity-off-light {
+  background: hsla(0, 0%, 95%);
+  color: black;
+  font-weight: bold;
+}
 .activity-swim {
   background: rgba(8, 192, 247, 1); 
   color: white;
+  font-weight: bold;
+}
+.activity-swim-light {
+  background: hsla(208, 80%, 85%);
+  color: black;
   font-weight: bold;
 }
 .activity-bike {
@@ -13,9 +23,19 @@
   color: white;
   font-weight: bold;
 }
+.activity-bike-light {
+  background: hsla(132, 80%, 85%);
+  color: black;
+  font-weight: bold;
+}
 .activity-run {
   background: rgba(247, 19, 16, 1); 
   color: white;
+  font-weight: bold;
+}
+.activity-run-light {
+  background: hsla(0, 100%, 85%);
+  color: black;
   font-weight: bold;
 }
 .activity-fitness {
@@ -23,11 +43,21 @@
   color: white;
   font-weight: bold;
 }
+.activity-fitness-light {
+  background: hsla(279, 100%, 85%);
+  color: black;
+  font-weight: bold;
+}
 .activity-race {
   background: rgba(250, 139, 22, 1); 
   color: white;
   font-weight: bold;
 }   
+.activity-race-light {
+  background: hsla(23, 100%, 85%);
+  color: black;
+  font-weight: bold;
+}
 .border-current-day {
   border: 5px solid red;
 }

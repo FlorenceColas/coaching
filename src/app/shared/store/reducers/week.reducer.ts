@@ -27,6 +27,7 @@ export interface Activity {
   typeId: number,
   activityDay: number,
   dayOfWeek: number,
+  planned: number,
   plannedContent: string,
   plannedDistance: number,
   plannedTime: number,
