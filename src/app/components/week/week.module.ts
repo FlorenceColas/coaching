@@ -4,15 +4,20 @@ import { WeekComponent } from './week.component';
 import { WeekService } from './week.service';
 import { LayoutModule } from 'src/app/shared/modules/layout.module';
 import { WeekRoutingModule } from './week.routing';
+import { DayDialogComponent } from '../day-dialog/day-dialog.component';
+import { DayComponent } from '../day/day.component';
 
 @NgModule({
   declarations: [
-    WeekComponent
+    WeekComponent,
+    DayDialogComponent,
+    DayComponent
   ],
   imports: [
     LayoutModule,
     WeekRoutingModule,
   ],
-  providers: [WeekService]
+  providers: [WeekService],
+  entryComponents: [DayDialogComponent]
 })
 export class WeekModule { }

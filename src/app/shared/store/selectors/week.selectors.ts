@@ -53,3 +53,10 @@ export const weekDaysSelector = createSelector(
     }
   }
 );
+export const getDayById = (index: number) => createSelector(weekDaysSelector, (allItems) => {
+  if (allItems) {
+    return allItems[index];
+  } else {
+    return null;
+  }
+});

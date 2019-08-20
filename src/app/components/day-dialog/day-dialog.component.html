@@ -1,0 +1,36 @@
+<div *ngIf="(dayActivities$ | async); let dayActivities">
+  <h2 mat-dialog-title>Activities on {{ dayActivities.day.date | date:"EEEE dd/MM/yyyy"}}</h2>
+
+  <hr>
+
+  <mat-dialog-content [formGroup]="form">
+      <div *ngFor="let act of dayActivities.activities">
+        <mat-accordion multi="true">
+          <mat-expansion-panel [@.disabled]="true" [expanded]="act.planned == 1">
+            <mat-expansion-panel-header [appActivityColor]="{ name: act.categoryId, status: act.state, planned: act.planned, resume: false }">
+            <mat-panel-title>
+              {{ act.categoryId | uppercase }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <ng-template matExpansionPanelContent>
+            <app-day></app-day> 
+          </ng-template>
+
+          <mat-action-row>
+              <button mat-raised-button color="primary">Save</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+        </mat-accordion>
+      
+      </div>
+
+  </mat-dialog-content>
+
+  <hr>
+
+  <mat-dialog-actions>
+    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+  </mat-dialog-actions>
+</div>

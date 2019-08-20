@@ -69,7 +69,6 @@ export class WeekEffets {
  
         newActivities.push({ day: { day: i, date: parseInt(weekStart) }, activities: newDayActities});
       }
-      console.log(newActivities);
       return new SetWeekActivities(newActivities) 
     }),
     catchError( (err: any) => {

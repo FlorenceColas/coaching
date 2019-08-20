@@ -1,7 +1,6 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AuthInterceptor } from '../../shared/interceptors/auth.interceptor';
@@ -24,7 +23,6 @@ const COMPONENTS = [
   imports: [
     CommonModule,
     HttpClientModule,
-    ReactiveFormsModule,
     RouterModule,
     LayoutModule,
   ],

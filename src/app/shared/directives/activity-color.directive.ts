@@ -18,7 +18,12 @@ export class ActivityColorDirective implements OnInit {
 	@HostBinding('class.activity-fitness-light') displayColorFitnessLight: boolean = false;
   @HostBinding('class.activity-race-light') displayColorRaceLight: boolean = false;
   
-  @Input('appActivityColor') activityName: {name: string, status: number, planned: number};   
+  @Input('appActivityColor') activityName: { 
+    name: string, 
+    status: number, 
+    planned: number, 
+    resume: boolean
+  };   
 
   constructor() { }
 
@@ -45,7 +50,7 @@ export class ActivityColorDirective implements OnInit {
           break;
       }
     }
-    if (this.activityName.status == 1 && this.activityName.planned != 1) {
+    if (this.activityName.resume && this.activityName.status == 1 && this.activityName.planned != 1) {
       switch (this.activityName.name) {
         case 'off':
           this.displayColorOffLight = true;

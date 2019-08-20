@@ -11,6 +11,8 @@ import { Week, Activity } from 'src/app/shared/store/reducers/week.reducer';
 import { weekDetailsSelector, weekDaysSelector } from 'src/app/shared/store/selectors/week.selectors';
 import { FetchWeekActivities, SetWeekDetails, SetCurrentWeek } from 'src/app/shared/store/actions/week.actions';
 import { DateTools } from 'src/app/shared/classes/date-tools.classes';
+import { MatDialog, MatDialogConfig, DialogPosition } from '@angular/material';
+import { DayDialogComponent } from '../day-dialog/day-dialog.component';
 
 @Component({
   selector: 'app-week',
@@ -27,7 +29,8 @@ export class WeekComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     @Inject(LOCALE_ID) protected localeId: string,
-    private store: Store<State>
+    private store: Store<State>,
+    private dialog: MatDialog
   ) { }
   
   ngOnInit() {
@@ -47,7 +50,7 @@ export class WeekComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  navigateToWeek(w: { week: string, year: string }) {
+  public navigateToWeek(w: { week: string, year: string }) {
     var selectedDate = moment().day("Tuesday").year(parseInt(w.year)).week(parseInt(w.week));
     var weekStart = selectedDate.clone().startOf('isoWeek').format('x');
     var weekEnd = selectedDate.clone().endOf('isoWeek').format('x');
@@ -66,5 +69,24 @@ export class WeekComponent implements OnInit, OnDestroy {
     this.store.dispatch(new FetchWeekActivities(w));
 
     this.router.navigate(['/week', w.week, w.year]);
+  }
+
+  public dayAllDialog(dayIndex: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      dayIndex: dayIndex
+    };
+
+    this.dialog.open(DayDialogComponent, dialogConfig);
+  }
+
+  public dayDialog(dayIndex: number, activityIndex: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      dayIndex: dayIndex,
+      activityIndex: activityIndex
+    };
+
+    this.dialog.open(DayDialogComponent, dialogConfig);
   }
 }
