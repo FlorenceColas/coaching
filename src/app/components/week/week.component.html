@@ -22,7 +22,7 @@
 
   <div *ngIf="(weekActivities$ | async); let weekActivities"
     fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
-      <span *ngFor="let w of weekActivities; let dayIndex = index">
+      <span *ngFor="let w of weekActivities; let dayIndex = index" fxFlex="auto">
         <div (click)="dayAllDialog(dayIndex)"
          [appBorder]="w.day.date | date:'dd/MM/yyyy'" 
          class="col text-center">
@@ -30,7 +30,7 @@
         </div>
         <div *ngFor="let act of w.activities; let actIndex = index" class="text-center">
           <ul class="list-group">
-            <li fxFlex="auto" class="list-group-item text-center" 
+            <li class="list-group-item text-center" 
               (click)="dayDialog(dayIndex, actIndex)"
               [appActivityColor]="{ name: act.categoryId, status: act.state, planned: act.planned, resume: true }"> 
               {{ act.categoryId | uppercase }}
