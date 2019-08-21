@@ -6,7 +6,7 @@
   <mat-dialog-content [formGroup]="form">
       <div *ngFor="let act of dayActivities.activities">
         <mat-accordion multi="true">
-          <mat-expansion-panel [@.disabled]="true" [expanded]="act.planned == 1">
+          <mat-expansion-panel [expanded]="act.planned == 1">
             <mat-expansion-panel-header [appActivityColor]="{ name: act.categoryId, status: act.state, planned: act.planned, resume: false }">
             <mat-panel-title>
               {{ act.categoryId | uppercase }}

@@ -1,22 +1,21 @@
 import { Directive, HostBinding, OnInit, Input } from '@angular/core';
 
+const ACTIVITIES_COLORS = {
+  off:     { planned: '#BDBDBD', realised: 'hsla(0, 0%, 95%)' }, 
+  swim:    { planned: 'rgba(8, 192, 247, 1)', realised: 'hsla(208, 80%, 85%)' },
+  bike:    { planned: 'rgba(133, 222, 25, 1)', realised: 'hsla(132, 80%, 85%)' },
+  run:     { planned: 'rgba(247, 19, 16, 1)', realised: 'hsla(0, 100%, 85%)' },
+  fitness: { planned: 'rgba(181, 107, 250, 1)', realised: 'hsla(279, 100%, 85%)' },
+  race:    { planned: 'rgba(250, 139, 22, 1)', realised: 'hsla(23, 100%, 85%)' }
+};
+
 @Directive({
   selector: '[appActivityColor]'
 })
 export class ActivityColorDirective implements OnInit {
-	@HostBinding('class.activity-off') displayColorOff: boolean = false;
-	@HostBinding('class.activity-swim') displayColorSwim: boolean = false;
-	@HostBinding('class.activity-bike') displayColorBike: boolean = false;
-	@HostBinding('class.activity-run') displayColorRun: boolean = false;
-	@HostBinding('class.activity-fitness') displayColorFitness: boolean = false;
-	@HostBinding('class.activity-race') displayColorRace: boolean = false;
-
-	@HostBinding('class.activity-off-light') displayColorOffLight: boolean = false;
-	@HostBinding('class.activity-swim-light') displayColorSwimLight: boolean = false;
-	@HostBinding('class.activity-bike-light') displayColorBikeLight: boolean = false;
-  @HostBinding('class.activity-run-light') displayColorRunLight: boolean = false;
-	@HostBinding('class.activity-fitness-light') displayColorFitnessLight: boolean = false;
-  @HostBinding('class.activity-race-light') displayColorRaceLight: boolean = false;
+  @HostBinding('style.background-color') backgroundColor: string;
+  @HostBinding('style.color') color: string;
+  @HostBinding('style.font-weight') fontWeight: string
   
   @Input('appActivityColor') activityName: { 
     name: string, 
@@ -29,49 +28,17 @@ export class ActivityColorDirective implements OnInit {
 
   ngOnInit() {
     if (this.activityName.planned == 1) {
-      switch (this.activityName.name) {
-        case 'off':
-          this.displayColorOff = true;
-          break;
-        case 'swim':
-          this.displayColorSwim = true;
-          break;
-        case 'bike':
-          this.displayColorBike = true;
-          break;
-        case 'run':
-          this.displayColorRun = true;
-          break;
-        case 'fitness':
-          this.displayColorFitness = true;
-          break;
-        case 'race':
-          this.displayColorRace = true;
-          break;
-      }
+      this.backgroundColor = ACTIVITIES_COLORS[this.activityName.name]['planned'];
+      this.color = 'white';
+      this.fontWeight = 'bold';
+    } else if (this.activityName.resume && this.activityName.status == 1 && this.activityName.planned != 1) {
+      this.backgroundColor = ACTIVITIES_COLORS[this.activityName.name]['realised'];
+      this.color = 'black';
+      this.fontWeight = 'normal';
+    } else {
+      this.backgroundColor = '';
+      this.color = 'black';
+      this.fontWeight = 'normal';
     }
-    if (this.activityName.resume && this.activityName.status == 1 && this.activityName.planned != 1) {
-      switch (this.activityName.name) {
-        case 'off':
-          this.displayColorOffLight = true;
-          break;
-        case 'swim':
-          this.displayColorSwimLight = true;
-          break;
-        case 'bike':
-          this.displayColorBikeLight = true;
-          break;
-        case 'run':
-          this.displayColorRunLight = true;
-          break;
-        case 'fitness':
-          this.displayColorFitnessLight = true;
-          break;
-        case 'race':
-          this.displayColorRaceLight = true;
-          break;
-      }
-    }
-    
   }
 }
