@@ -22,7 +22,8 @@
 
   <div *ngIf="(weekActivities$ | async); let weekActivities"
     fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
-      <span *ngFor="let w of weekActivities; let dayIndex = index" fxFlex="auto">
+      <span *ngFor="let w of weekActivities; let dayIndex = index" fxFlex="auto"git status
+      >
         <div (click)="dayAllDialog(dayIndex)"
          [appBorder]="w.day.date | date:'dd/MM/yyyy'" 
          class="col text-center">

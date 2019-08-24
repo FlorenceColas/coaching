@@ -40,7 +40,7 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   signinSuccess$ = this.actions$.pipe(
     ofType<SigninSuccess>(AuthActionTypes.SIGNIN_SUCCESS),
-    map( (action: SigninSuccess) => action.payload),
+    map( (action) => action.payload),
     tap( (token: string) => {
       localStorage.setItem('jwt', token);
       if (!this.subscription) {

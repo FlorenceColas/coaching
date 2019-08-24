@@ -12,7 +12,8 @@ import { weekDetailsSelector, weekDaysSelector } from 'src/app/shared/store/sele
 import { FetchWeekActivities, SetWeekDetails, SetCurrentWeek } from 'src/app/shared/store/actions/week.actions';
 import { DateTools } from 'src/app/shared/classes/date-tools.classes';
 import { MatDialog, MatDialogConfig, DialogPosition } from '@angular/material';
-import { DayDialogComponent } from '../day-dialog/day-dialog.component';
+import { DayDialogComponent } from './shared/components/day-dialog/day-dialog.component';
+import { AthleteState } from 'src/app/shared/store/reducers/athlete.reducer';
 
 @Component({
   selector: 'app-week',
@@ -25,6 +26,7 @@ export class WeekComponent implements OnInit, OnDestroy {
   public week$: Observable<Week>;
   public weekActivities$: Observable<{ day: { day: number, date: number }, activities: Activity[] }[]>;
   private subscription: Subscription;
+  public atheletes: Observable<AthleteState>;
 
   constructor(
     private router: Router,

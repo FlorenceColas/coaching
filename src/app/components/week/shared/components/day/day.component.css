@@ -1,0 +1,10 @@
+textarea {
+  outline: 0;
+  padding: 2px 20px;
+  font-size: 14px;
+  border-radius: 3px;
+}
+
+button {
+  outline: 0;
+}

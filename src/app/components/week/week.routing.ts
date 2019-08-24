@@ -5,7 +5,7 @@ import { WeekComponent } from './week.component';
 
 const WEEK_ROUTE: Route[] = [
   { path: '', component: WeekComponent, pathMatch: 'full' },
-  { path: ':week/:year', component: WeekComponent }
+  { path: ':athlete/:week/:year', component: WeekComponent }
 ];
 
 @NgModule({

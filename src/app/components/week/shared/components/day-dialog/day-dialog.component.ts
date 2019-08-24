@@ -42,4 +42,7 @@ export class DayDialogComponent implements OnInit {
     this.dayActivities$ = this.store.select(getDayById(this.dayIndex));
   }
 
+  public close() {
+    this.dialogRef.close();
+  }
 }

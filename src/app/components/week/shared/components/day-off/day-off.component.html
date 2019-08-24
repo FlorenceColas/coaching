@@ -1,0 +1,12 @@
+<form [formGroup]="form">
+  <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+    <mat-slide-toggle formControlName="offActive">Day off!</mat-slide-toggle>
+  </span>
+
+  <hr>
+  
+  <span fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary" [disabled]="saveButtonDisabled">Save</button>
+  </span>
+</form>
+  

@@ -20,19 +20,6 @@ export class WeekEffets {
     ofType<FetchWeekActivities>(WeekActionTypes.FETCH_WEEK_ACTIVITIES),
     switchMap( (action: FetchWeekActivities) => this.weekService.fetchActivities(action.payload.week, action.payload.year)),
     map( (serviceResult: ServiceResult) => {
-/*      let newActivities: { day: {day: number, date: number }, activities: Activity[] }[] = new Array;
-      const selectedDate = moment().weekday(1).year(parseInt(serviceResult.year)).week(parseInt(serviceResult.week));
-
-      for (let i = 1; i <= 7; i++) { 
-        let values: Activity[] = new Array;
-        if (serviceResult.activities != undefined) {
-          values = serviceResult.activities.filter( (value: Activity) => value.dayOfWeek == i);
-        }
-        const weekStart = selectedDate.clone().add(i-1, 'days').format('x');
-        newActivities.push({ day: { day: i, date: parseInt(weekStart) }, activities: values});
-      }
-*/
-
       let newActivities: { day: {day: number, date: number }, activities: Activity[] }[] = new Array;
       const selectedDate = moment().weekday(1).year(parseInt(serviceResult.year)).week(parseInt(serviceResult.week));
  
