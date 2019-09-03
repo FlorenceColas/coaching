@@ -19,6 +19,6 @@ export class WeekService {
   constructor(private http: HttpClient) {}
 
   public fetchActivities(week: string, year: string): Observable<ServiceResult> {
-    return this.http.get<ServiceResult>(this.uri + '/api/rest/v1/week-activities/' + week + '/' + year + '/1');
+    return this.http.get<ServiceResult>(this.uri + '/api/rest/v1/activities/' + week + '/' + year + '/1');
   }
 }

@@ -6,7 +6,7 @@ import { SigninComponent } from './components/signin/signin.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 
 const APP_ROUTE: Route[] = [
-  { path: '', component: HomepageComponent },
+  { path: '', component: HomepageComponent, pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
   { 
     path: 'profile', 
@@ -14,7 +14,7 @@ const APP_ROUTE: Route[] = [
     loadChildren: './components/profile/profile.module#ProfileModule' 
   },
   { 
-    path: 'week', 
+    path: 'week/:week/:year', 
     canActivate: [AuthGuard], 
     loadChildren: './components/week/week.module#WeekModule' 
   },

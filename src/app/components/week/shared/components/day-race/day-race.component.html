@@ -4,8 +4,7 @@
           <mat-form-field>
             <mat-select 
               formControlName="activityType" 
-              required placeholder="Category type" 
-              (selectionChange)="onChangeType($event.value)">
+              required placeholder="Category type">
             <mat-option *ngFor="let type of types" [value]="type.value">
               {{ type.viewValue }}
             </mat-option>
@@ -19,7 +18,8 @@
       <hr>
 
       <span fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" [disabled]="saveButtonDisabled">Save</button>
+        <button *ngIf="activityDetail.id" mat-raised-button color="primary" (click)="remove()">Remove</button>
+        <button mat-raised-button color="primary" [disabled]="saveButtonDisabled" (click)="save()">Save</button>
       </span>
   
   </form>

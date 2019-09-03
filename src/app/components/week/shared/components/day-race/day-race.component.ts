@@ -1,6 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Activity } from 'src/app/shared/store/reducers/week.reducer';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { ActivityService } from 'src/app/shared/services/activity.service';
+import { State } from 'src/app/shared/store';
+import { Store } from '@ngrx/store';
+import { FetchWeekActivities } from 'src/app/shared/store/actions/week.actions';
+import * as moment from 'moment';
 
 export interface Type {
   value: string;
@@ -24,7 +29,11 @@ export class DayRaceComponent implements OnInit {
   public form: FormGroup;
   public saveButtonDisabled: boolean = true;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private activityService: ActivityService,
+    private store: Store<State>
+  ) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -37,6 +46,23 @@ export class DayRaceComponent implements OnInit {
         this.saveButtonDisabled = false;
       }
     });
+  }
+  
+  public save() {
+    if (this.activityDetail.id) {
+      this.activityService.updateActivity(this.activityDetail);
+    } else {
+      if (this.form.get('offActive')) {
+        this.activityService.createActivity(this.activityDetail);
+      } else {
+        this.activityService.removeActivity(this.activityDetail.id);
+      }
+    }
+
+    const day: number = this.activityDetail.activityDay;
+    const week: number = moment(day).isoWeek();
+    const year: number = moment(day).year();
+    this.store.dispatch(new FetchWeekActivities({ week: week.toString(), year: year.toString()}));
   }
 
 }

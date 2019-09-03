@@ -11,6 +11,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 import { SigninComponent } from '../../components/signin/signin.component';
 import { LayoutModule } from './layout.module';
 import { UserService } from '../../shared/services/user.service';
+import { ActivityService } from '../services/activity.service';
  
 const COMPONENTS = [
   HeaderComponent,
@@ -33,6 +34,7 @@ const COMPONENTS = [
       useClass: AuthInterceptor,
       multi: true
     },
+    ActivityService,
     AuthService,
     AuthGuard,
     { 

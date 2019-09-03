@@ -34,7 +34,8 @@
     </span>
     <hr>
     <span fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end center">
-      <button mat-raised-button color="primary" [disabled]="saveButtonDisabled">Save</button>
+        <button *ngIf="activityDetail.id" mat-raised-button color="primary" (click)="remove()">Remove</button>
+        <button mat-raised-button color="primary" [disabled]="saveButtonDisabled" (click)="save()">Save</button>
     </span>
   </span>
 

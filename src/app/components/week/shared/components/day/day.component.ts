@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Activity } from 'src/app/shared/store/reducers/week.reducer';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivityService } from 'src/app/shared/services/activity.service';
 
 export interface Type {
   value: string;
@@ -19,7 +20,10 @@ export class DayComponent implements OnInit {
   public saveButtonDisabled: boolean = true;
   public displaySwimHelp: boolean = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private activityService: ActivityService
+  ) { }
 
   ngOnInit() {
     if (this.activityDetail.typeId == 1) {
@@ -30,6 +34,8 @@ export class DayComponent implements OnInit {
     
     this.form = this.fb.group({
       activityType: [this.activityDetail.typeId],
+      category: [this.activityDetail.categoryId],
+      activityDay: [this.activityDetail.activityDay],
       plannedContent: [this.activityDetail.plannedContent],
       plannedDistance: [this.activityDetail.plannedDistance],
       plannedTime: [this.activityDetail.plannedTime],
@@ -76,4 +82,20 @@ export class DayComponent implements OnInit {
     }
   }
 
+  public save() {
+    this.activityDetail.planned = 1;
+    this.activityDetail.athleteUserId = 1;
+
+    console.log(this.activityDetail);
+    console.log(this.form.value);
+    if (this.activityDetail.id) {
+      this.activityService.updateActivity(this.form.value);
+    } else {
+      this.activityService.createActivity(this.form.value);
+    }
+  }
+
+  public remove() {
+    this.activityService.removeActivity(this.activityDetail.id);
+  }
 }
