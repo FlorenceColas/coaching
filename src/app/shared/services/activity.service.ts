@@ -19,9 +19,6 @@ export class ActivityService {
   ) { }
 
   public createActivity(formValues) {
-    console.log('create activity');
-    console.log(formValues);
-
     const obj = {
       activityDay: formValues.activityDay,
       athleteUserId: '1',
@@ -37,8 +34,8 @@ export class ActivityService {
       headers: new HttpHeaders().set('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8'),
     };
 
-    this.http.post<any>(this.uri + '/api/rest/v1/activities', data, options).subscribe( 
-      (res) => {
+    this.http.post<Activity>(this.uri + '/api/rest/v1/activities', data, options).subscribe( 
+      () => {
         const day: number = formValues.activityDay;
         const week: number = moment(day).isoWeek();
         const year: number = moment(day).year();
@@ -50,7 +47,7 @@ export class ActivityService {
 
   public removeActivity(id: number) {
     this.http.delete<any>(this.uri + '/api/rest/v1/activities/' + id).subscribe( 
-      (res) => {
+      () => {
         let week$: CurrentWeek;
         const subscription = this.store.pipe(select(currentWeekSelector)).subscribe( (week: CurrentWeek) => {
           week$ = week;
@@ -63,9 +60,6 @@ export class ActivityService {
   }
 
   public updateActivity(formValues) {
-    console.log('update activity');
-    console.log(formValues);
-
     const obj = {
       activityDay: formValues.activityDay,
       athleteUserId: '1',
@@ -76,20 +70,19 @@ export class ActivityService {
       plannedDistance: formValues.plannedDistance,
       plannedTime: formValues.plannedTime,
     };
-    const data = new HttpParams({ fromObject: obj });
+//    const data = new HttpParams({ fromObject: obj });
     const options = {
-      headers: new HttpHeaders().set('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8'),
-      params: new HttpParams().set('_method', 'PUT')
+      headers: new HttpHeaders().set('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8')
     };
 
-    this.http.post<any>(this.uri + '/api/rest/v1/activities', data, options).subscribe( 
-      (res) => {
+    this.http.put<any>(this.uri + '/api/rest/v1/activities/' + formValues.id, obj, options).subscribe( 
+      () => {
         const day: number = formValues.activityDay;
         const week: number = moment(day).isoWeek();
         const year: number = moment(day).year();
         this.store.dispatch(new FetchWeekActivities({ week: week.toString(), year: year.toString()}));
       },
       (err) => console.log(err)
-    );
+    );  
   }
 }

@@ -36,6 +36,7 @@ export class DayComponent implements OnInit {
       activityType: [this.activityDetail.typeId],
       category: [this.activityDetail.categoryId],
       activityDay: [this.activityDetail.activityDay],
+      id: [this.activityDetail.id],
       plannedContent: [this.activityDetail.plannedContent],
       plannedDistance: [this.activityDetail.plannedDistance],
       plannedTime: [this.activityDetail.plannedTime],
@@ -86,8 +87,6 @@ export class DayComponent implements OnInit {
     this.activityDetail.planned = 1;
     this.activityDetail.athleteUserId = 1;
 
-    console.log(this.activityDetail);
-    console.log(this.form.value);
     if (this.activityDetail.id) {
       this.activityService.updateActivity(this.form.value);
     } else {
