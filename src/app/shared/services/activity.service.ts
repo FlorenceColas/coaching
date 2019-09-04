@@ -18,17 +18,12 @@ export class ActivityService {
     private store: Store<State>
   ) { }
 
-  public createActivity(formValues) {
-    const obj = {
-      activityDay: formValues.activityDay,
-      athleteUserId: '1',
-      categoryId: formValues.category,
-      activityType: formValues.activityType,
-      planned: '1',
-      plannedContent: formValues.plannedContent,
-      plannedDistance: formValues.plannedDistance,
-      plannedTime: formValues.plannedTime,
-    };
+  public createActivity(values) {
+    const obj = {};
+    for (const [key, value] of Object.entries(values)) {
+      obj[key] = value;
+    }
+
     const data = new HttpParams({ fromObject: obj });
     const options = {
       headers: new HttpHeaders().set('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8'),
@@ -36,7 +31,7 @@ export class ActivityService {
 
     this.http.post<Activity>(this.uri + '/api/rest/v1/activities', data, options).subscribe( 
       () => {
-        const day: number = formValues.activityDay;
+        const day: number = values.activity_date;
         const week: number = moment(day).isoWeek();
         const year: number = moment(day).year();
         this.store.dispatch(new FetchWeekActivities({ week: week.toString(), year: year.toString()}));
@@ -59,30 +54,27 @@ export class ActivityService {
     );
   }
 
-  public updateActivity(formValues) {
-    const obj = {
-      activityDay: formValues.activityDay,
-      athleteUserId: '1',
-      categoryId: formValues.category,
-      activityType: formValues.activityType,
-      planned: '1',
-      plannedContent: formValues.plannedContent,
-      plannedDistance: formValues.plannedDistance,
-      plannedTime: formValues.plannedTime,
-    };
-//    const data = new HttpParams({ fromObject: obj });
+  public updateActivity(key, values) {
+    const obj = {};
+    for (const [key, value] of Object.entries(values)) {
+      obj[key] = value;
+    }
+    
+    const data = new HttpParams({ fromObject: obj });
     const options = {
-      headers: new HttpHeaders().set('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8')
+      headers: new HttpHeaders().set('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8'),
+      params: new HttpParams().set('_method', 'PUT')
     };
 
-    this.http.put<any>(this.uri + '/api/rest/v1/activities/' + formValues.id, obj, options).subscribe( 
+    this.http.post<any>(this.uri + '/api/rest/v1/activities/' + key, data, options).subscribe( 
       () => {
-        const day: number = formValues.activityDay;
+        const day: number = values.activity_date;
         const week: number = moment(day).isoWeek();
         const year: number = moment(day).year();
         this.store.dispatch(new FetchWeekActivities({ week: week.toString(), year: year.toString()}));
       },
       (err) => console.log(err)
-    );  
+    );
+    
   }
 }

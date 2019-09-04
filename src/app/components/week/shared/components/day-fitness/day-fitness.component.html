@@ -1,25 +1,25 @@
 <form [formGroup]="form">
 
-    <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-      <mat-form-field>
-        <mat-select 
-          formControlName="activityType" 
-          required placeholder="Category type" 
-          (selectionChange)="onChangeType($event.value)">
-          <mat-option *ngFor="let type of types" [value]="type.value">
-            {{ type.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>        
-      <mat-form-field class="example-full-width">
-        <input matInput type="number" formControlName="plannedTime" placeholder="Time (minutes)">
-      </mat-form-field>
-    </span>
-    
-    <hr>
+  <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+    <mat-form-field>
+      <mat-select 
+        formControlName="activityType" 
+        required placeholder="Category type">
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{ type.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>        
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" formControlName="plannedTime" placeholder="Time (minutes)">
+    </mat-form-field>
+  </span>
+  
+  <hr>
 
-    <span fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end center">
-      <button mat-raised-button color="primary" [disabled]="saveButtonDisabled">Save</button>
-    </span>
-
+  <span fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end center">
+    <button *ngIf="activityDetail.id" mat-raised-button color="primary" (click)="remove()">Remove</button>
+    <button mat-raised-button color="primary" [disabled]="saveButtonDisabled" (click)="save()">Save</button>
+  </span>
+  
 </form>

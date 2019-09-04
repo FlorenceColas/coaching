@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Activity } from 'src/app/shared/store/reducers/week.reducer';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { ActivityService } from 'src/app/shared/services/activity.service';
 
 export interface Type {
   value: string;
@@ -21,7 +22,10 @@ export class DayFitnessComponent implements OnInit {
   public form: FormGroup;
   public saveButtonDisabled: boolean = true;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private activityService: ActivityService,
+  ) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -36,4 +40,24 @@ export class DayFitnessComponent implements OnInit {
     });
   }
 
+  public save() {
+    const data = {
+      activity_date: this.activityDetail.activityDay,
+      athletes_users_id: 1,
+      categories_id: this.activityDetail.categoryId, 
+      planned: 1, 
+      planned_time: this.form.get('plannedTime').value,
+      types_id: this.form.get('activityType').value,
+    };
+
+    if (this.activityDetail.id) {
+      this.activityService.updateActivity(this.activityDetail.id, data);
+    } else {
+      this.activityService.createActivity(data);
+    }
+  }
+
+  public remove() {
+    this.activityService.removeActivity(this.activityDetail.id);
+  }
 }

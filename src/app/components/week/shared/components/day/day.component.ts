@@ -84,13 +84,21 @@ export class DayComponent implements OnInit {
   }
 
   public save() {
-    this.activityDetail.planned = 1;
-    this.activityDetail.athleteUserId = 1;
+    const data = {
+      activity_date: this.activityDetail.activityDay,
+      athletes_users_id: 1,
+      categories_id: this.activityDetail.categoryId, 
+      planned: 1, 
+      planned_content: this.form.get('plannedContent').value,
+      planned_distance: this.form.get('plannedDistance').value,
+      planned_time: this.form.get('plannedTime').value,
+      types_id: this.form.get('activityType').value,
+    };
 
     if (this.activityDetail.id) {
-      this.activityService.updateActivity(this.form.value);
+      this.activityService.updateActivity(this.activityDetail.id, data);
     } else {
-      this.activityService.createActivity(this.form.value);
+      this.activityService.createActivity(data);
     }
   }
 
