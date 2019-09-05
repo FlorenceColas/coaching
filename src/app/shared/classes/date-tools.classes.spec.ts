@@ -1,6 +1,6 @@
 import { DateTools } from './date-tools.classes';
 
-describe('DateTools', () => {
+describe('*** DateTools class ***', () => {
   it('should return the previous week in the same year', () => {
     const ret = DateTools.getPreviousWeek('35', '2019');
     const expected = { week: '34', year: '2019' };

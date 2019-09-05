@@ -28,7 +28,7 @@ export const isCurrentAthleteSelector = createSelector(
     if (athleteState) {
       return athleteState.isCurrentAthlete;
     } else {
-      return null;
+      return false;
     }
   }
 );
