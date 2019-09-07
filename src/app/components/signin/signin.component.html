@@ -9,7 +9,7 @@
               <mat-form-field>
                   <input formControlName="password" matInput type="password" placeholder="mot de passe">
               </mat-form-field>
-              <div *ngIf="error$ | async; let error">{{ error }}</div>
+              <div *ngIf="error$ | async; let error">{{ error.error }}</div>
               <button mat-raised-button color="primary" (click)="signIn()">Sign in</button>
           </form>
       </mat-card-content>

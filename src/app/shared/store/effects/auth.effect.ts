@@ -55,8 +55,7 @@ export class AuthEffects {
     ofType<TryFetchCurrentUser>(AuthActionTypes.TRY_FETCH_CURRENT_USER),
     switchMap( () => this.userService.getCurrentUser()),
     map( (user: User) => new SetCurrentUser(user)),
-    catchError( (err: any) => {
-      console.log(err);
+    catchError( () => {
       return empty();
     })
   );
@@ -66,6 +65,7 @@ export class AuthEffects {
     ofType<TryRefreskToken>(AuthActionTypes.TRY_REFRESH_TOKEN),
     withLatestFrom(this.store.pipe(select(tokenSelector))),
     switchMap( ([action, token]) => {
+      console.log(token);
       if (token) {
         return this.authService.refreshToken().pipe(
           map( (newToken: string) => new SigninSuccess(newToken)),
@@ -90,7 +90,7 @@ export class AuthEffects {
     exhaustMap( (credentials: { username: string, password: string }) => 
       this.authService.signIn(credentials).pipe(
         map( (token: string) => new SigninSuccess(token) ),
-        catchError( (err: any) => of(new SigninError(err.error)) )
+        catchError( (err: any) => of(new SigninError(err)) )
       )
     )
   );
