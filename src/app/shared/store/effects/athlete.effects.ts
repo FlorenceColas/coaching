@@ -8,7 +8,7 @@ import { AthleteService } from '../../services/athlete.service';
 
 
 @Injectable()
-export class WeekEffets {
+export class AthleteEffets {
   constructor(
     private actions$: Actions,
     private athleteService: AthleteService

@@ -9,7 +9,7 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import { Activity } from "../reducers/week.reducer";
 
 @Injectable()
-export class WeekEffets {
+export class WeekEffects {
   constructor(
     private actions$: Actions,
     private weekService: WeekService
@@ -21,7 +21,7 @@ export class WeekEffets {
     switchMap( (action: FetchWeekActivities) => this.weekService.fetchActivities(action.payload.week, action.payload.year)),
     map( (serviceResult: ServiceResult) => {
       let newActivities: { day: {day: number, date: number }, activities: Activity[] }[] = new Array;
-      const selectedDate = moment().weekday(1).year(parseInt(serviceResult.year)).week(parseInt(serviceResult.week));
+      const selectedDate = moment().weekday(1).year(parseInt(serviceResult.year)).week(parseInt(serviceResult.week)).hour(1).minute(0).second(0).millisecond(0);
  
       for (let i = 1; i <= 7; i++) {
         let values: Activity[] = new Array;
@@ -66,20 +66,20 @@ export class WeekEffets {
 
   private initActivity(date: number, category: string, dayOfWeek: number): Activity {
     return {
-      "id": null,
-      "athleteUserId": null,
-      "categoryId": category,
-      "typeId": null,
-      "activityDay": date,
-      "dayOfWeek": dayOfWeek,
-      "planned": 0,
-      "plannedContent": null,
-      "plannedDistance": null,
-      "plannedTime": null,
-      "realisedContent": null,
-      "realisedDistance": null,
-      "realisedTime": null,
-      "state": null
+      'id': null,
+      'athleteUserId': null,
+      'categoryId': category,
+      'typeId': null,
+      'activityDay': date,
+      'dayOfWeek': dayOfWeek,
+      'planned': 0,
+      'plannedContent': null,
+      'plannedDistance': null,
+      'plannedTime': null,
+      'realisedContent': null,
+      'realisedDistance': null,
+      'realisedTime': null,
+      'state': null
     }
   }
 }

@@ -65,7 +65,6 @@ export class AuthEffects {
     ofType<TryRefreskToken>(AuthActionTypes.TRY_REFRESH_TOKEN),
     withLatestFrom(this.store.pipe(select(tokenSelector))),
     switchMap( ([action, token]) => {
-      console.log(token);
       if (token) {
         return this.authService.refreshToken().pipe(
           map( (newToken: string) => new SigninSuccess(newToken)),
