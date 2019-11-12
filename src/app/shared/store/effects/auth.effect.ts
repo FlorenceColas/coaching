@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { map, switchMap, exhaustMap, catchError, tap, withLatestFrom } from 'rxjs/operators';
-import { of, empty, Subscription } from 'rxjs';
+import { of, empty, Subscription, Observable } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
 import { TrySignin, AuthActionTypes, SigninSuccess, SigninError, TryRefreskToken, Logout, TryFetchCurrentUser, SetCurrentUser } from '../actions/auth.actions';
@@ -11,6 +11,7 @@ import { State } from '..';
 import { tokenSelector } from '../selectors/auth.selectors';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
+import { currentWeekSelector } from '../../store/selectors/week.selectors';
 
 @Injectable()
 export class AuthEffects {
@@ -33,6 +34,7 @@ export class AuthEffects {
         this.subscription = null;
       }
       localStorage.removeItem('jwt');
+
       this.router.navigate(['/']);
     })
   );
@@ -40,13 +42,17 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   signinSuccess$ = this.actions$.pipe(
     ofType<SigninSuccess>(AuthActionTypes.SIGNIN_SUCCESS),
-    map( (action) => action.payload),
+    map( (action) => action.payload ),
     tap( (token: string) => {
       localStorage.setItem('jwt', token);
       if (!this.subscription) {
         this.subscription = this.authService.initTimer().subscribe();
-        this.router.navigate(['/']);
       }
+    }),
+    withLatestFrom(this.store, (action, state) => {
+      let w = state.week.currentWeek.week;
+      let y = state.week.currentWeek.year;
+      this.router.navigate(['/week', w, y]);
     })
   );
 
