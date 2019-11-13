@@ -52,7 +52,7 @@ export class AuthEffects {
       let w = state.week.currentWeek.week;
       let y = state.week.currentWeek.year;
       this.router.navigate(['/week', w, y]);
-    }),
+    })
   );
 
   @Effect()

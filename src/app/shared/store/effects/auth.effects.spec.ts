@@ -33,6 +33,8 @@ describe('*** Auth Effects ***', () => {
   };
 
   beforeAll( () => {
+    TestBed.resetTestingModule();
+
     TestBed.configureTestingModule( {
       imports: [
         HttpClientModule,
@@ -57,7 +59,7 @@ describe('*** Auth Effects ***', () => {
 
   describe('** logout$ effect **', () => {
     it('should navigate to /', () => {
-      jasmine.createSpy('navigate').and.callThrough();
+      spyOn(routerService, 'navigate').and.callThrough();
       actions = hot('---a-', { a: new AuthActions.Logout() });
       const expected = hot('---b', { b: new AuthActions.Logout() });
       expect(effects.logout$).toBeObservable(expected);
@@ -69,21 +71,35 @@ describe('*** Auth Effects ***', () => {
   });
 
   describe('** signinSuccess$ effect **', () => {
-    it('should navigate to /', () => {
-      jasmine.createSpy('navigate').and.callThrough();
+    it('should navigate to /week/<week>/<year>', () => {
+      store.setState({ 
+        auth: null,
+        week: {
+          week: null,
+          days: null,
+          currentWeek: {
+            week: '46',
+            year: '2019'
+          }
+        },
+        athletes: null,
+        router: null
+      });
+
+      spyOn(routerService, 'navigate').and.callThrough();
       actions = hot('---a-', { a: new AuthActions.SigninSuccess('myjwt') });
-      const expected = cold('---b', { b: 'myjwt' });
+      const expected = hot('---b', { b: undefined });
       expect(effects.signinSuccess$).toBeObservable(expected);
       
       effects.signinSuccess$.subscribe( () => {
-        expect(routerService.navigate).toHaveBeenCalledWith(['/']);
+        expect(routerService.navigate).toHaveBeenCalledWith(['week', '46', '2019']);
       });
     });
   });
 
   describe('** tryFetchCurrentUser$ **', () => {
     it('should return SetCurrentUser action', () => {
-      jasmine.createSpy('getCurrentUser').and.returnValue(of({
+      spyOn(userService, 'getCurrentUser').and.returnValue(of({
         id: 1,
         username: 'myusername',
         display: 'mydisplayname',
@@ -100,7 +116,7 @@ describe('*** Auth Effects ***', () => {
     });
 
     it('should return empty due to userService error', () => {
-      jasmine.createSpy('getCurrentUser').and.returnValue(cold('-#|', {}, 'error'));
+      spyOn(userService, 'getCurrentUser').and.returnValue(cold('-#|', {}, 'error'));
       actions = hot('---a-', { a: new AuthActions.TryFetchCurrentUser() });
       const expected = cold('----|');
       expect(effects.tryFetchCurrentUser$).toBeObservable(expected);
@@ -121,7 +137,7 @@ describe('*** Auth Effects ***', () => {
         router: null
       });
         
-      jasmine.createSpy('refreshToken').and.returnValue(of('myjwt'));
+      spyOn(authService, 'refreshToken').and.returnValue(of('myjwt'));
       actions = hot('---a-', { a: new AuthActions.TryRefreskToken() });
       const expected = cold('---b', { b: new AuthActions.SigninSuccess('myjwt') });
       expect(effects.tryRefreshToken$).toBeObservable(expected);
@@ -139,7 +155,7 @@ describe('*** Auth Effects ***', () => {
         athletes: null,
         router: null
       });
-      jasmine.createSpy('refreshToken').and.returnValue(cold('-#|', {}, 'error'));
+      spyOn(authService, 'refreshToken').and.returnValue(cold('-#|', {}, 'error'));
       actions = hot('---a-', { a: new AuthActions.TryRefreskToken() });
       const expected = cold('');
       expect(effects.tryRefreshToken$).toBeObservable(expected);
@@ -165,14 +181,14 @@ describe('*** Auth Effects ***', () => {
     
   describe('** trySignin$ effect **', () => {
     it('should return SigninSuccess action', () => {
-      jasmine.createSpy('signIn').and.returnValue(of('myjwt'));
+      spyOn(authService, 'signIn').and.returnValue(of('myjwt'));
       actions = hot('---a-', { a: new AuthActions.TrySignin({ username: 'myusername', password: 'mypassword' }) });
       const expected = cold('---b', { b: new AuthActions.SigninSuccess('myjwt')});
       expect(effects.trySignin$).toBeObservable(expected);
     });
   
     it('should return SigninError action', () => {
-      jasmine.createSpy('signIn').and.returnValue(cold('-#', {}, 'error'));
+      spyOn(authService, 'signIn').and.returnValue(cold('-#', {}, 'error'));
       actions = hot('---a-', { a: new AuthActions.TrySignin({ username: 'myusername', password: 'mypassword' }) });
       const expected = cold('----b', { b: new AuthActions.SigninError('error') });
       expect(effects.trySignin$).toBeObservable(expected);

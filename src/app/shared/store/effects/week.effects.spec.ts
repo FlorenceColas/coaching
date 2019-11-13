@@ -7,12 +7,14 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { hot, cold } from 'jasmine-marbles';
 import * as WeekActions from '../actions/week.actions';
 
-describe('*** Auth Effects ***', () => {
+describe('*** Week Effects ***', () => {
   let effects: WeekEffects;
   let actions: Observable<any>;
   let weekService: WeekService;
 
   beforeAll( () => {
+    TestBed.resetTestingModule();
+    
     TestBed.configureTestingModule( {
       imports: [
         HttpClientModule,
@@ -28,7 +30,6 @@ describe('*** Auth Effects ***', () => {
     weekService = TestBed.get(WeekService);
   });
 
-  describe('*** Week Effects ***', () => {
     describe('** fetchWeekActivities$ **', () => {
       it('should return SetWeekActivities action', () => {
         const mockActivityResult = {
@@ -36,7 +37,7 @@ describe('*** Auth Effects ***', () => {
           year: '2019',
           activities: []
         };
-        jasmine.createSpy('fetchActivities').and.returnValue(of(mockActivityResult));
+        spyOn(weekService, 'fetchActivities').and.returnValue(of(mockActivityResult));
         actions = hot('---a-', { a: new WeekActions.FetchWeekActivities({
           week: '34',
           year: '2019'
@@ -734,7 +735,7 @@ describe('*** Auth Effects ***', () => {
       });
 
       it('should return empty due to weekService error', () => {
-        jasmine.createSpy('fetchActivities').and.returnValue(cold('-#|', {}, 'error'));
+        spyOn(weekService, 'fetchActivities').and.returnValue(cold('-#|', {}, 'error'));
         actions = hot('---a-', { a: new WeekActions.FetchWeekActivities({
           week: '34',
           year: '2019'
@@ -743,5 +744,4 @@ describe('*** Auth Effects ***', () => {
         expect(effects.fetchWeekActivities$).toBeObservable(expected);
       });      
     });
-  });
 });
