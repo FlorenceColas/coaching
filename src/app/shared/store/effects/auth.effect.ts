@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { map, switchMap, exhaustMap, catchError, tap, withLatestFrom } from 'rxjs/operators';
-import { of, empty, Subscription, Observable } from 'rxjs';
+import { of, empty, Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
 import { TrySignin, AuthActionTypes, SigninSuccess, SigninError, TryRefreskToken, Logout, TryFetchCurrentUser, SetCurrentUser } from '../actions/auth.actions';
@@ -11,7 +11,6 @@ import { State } from '..';
 import { tokenSelector } from '../selectors/auth.selectors';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
-import { currentWeekSelector } from '../../store/selectors/week.selectors';
 
 @Injectable()
 export class AuthEffects {
@@ -48,12 +47,12 @@ export class AuthEffects {
       if (!this.subscription) {
         this.subscription = this.authService.initTimer().subscribe();
       }
-    }),
+    } ),
     withLatestFrom(this.store, (action, state) => {
       let w = state.week.currentWeek.week;
       let y = state.week.currentWeek.year;
       this.router.navigate(['/week', w, y]);
-    })
+    }),
   );
 
   @Effect()
@@ -91,10 +90,10 @@ export class AuthEffects {
   @Effect()
   trySignin$ = this.actions$.pipe(
     ofType<TrySignin>(AuthActionTypes.TRY_SIGNIN),
-    map( (action: TrySignin) => action.payload),
+    map( (action: TrySignin) => action.payload ),
     exhaustMap( (credentials: { username: string, password: string }) => 
       this.authService.signIn(credentials).pipe(
-        map( (token: string) => new SigninSuccess(token) ),
+        map( (token: string, id: number) => new SigninSuccess(token) ),
         catchError( (err: any) => of(new SigninError(err)) )
       )
     )

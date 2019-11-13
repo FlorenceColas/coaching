@@ -2,11 +2,11 @@ import * as AthleteActions from './athlete.actions';
 
 describe('*** Athlete Actions ***', () => {
   
-  it('should create a FetchAthletes action', () => {
-    const payload= 1;
-    const action = new AthleteActions.FetchAthletes(payload);
+  it('should create a TryFetchAthletes action', () => {
+    const payload = 1;
+    const action = new AthleteActions.TryFetchAthletes(payload);
     expect({ ... action }).toEqual({
-      type: AthleteActions.AthleteActionTypes.FETCH_ATHLETES,
+      type: AthleteActions.AthleteActionTypes.TRY_FETCH_ATHLETES,
       payload
     });
   });

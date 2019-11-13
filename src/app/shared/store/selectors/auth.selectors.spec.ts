@@ -80,6 +80,7 @@ describe('*** Auth Selectors ***', () => {
       athletes: null,
       auth: {
         user: {
+          id: 1,
           username: 'myusername',
           display: 'mydisplayname',
           password: 'mypassword',
@@ -92,6 +93,7 @@ describe('*** Auth Selectors ***', () => {
       router: null
     };
     expect(AuthSelectors.currentUserSelector(mockState)).toEqual({
+      id: 1,
       username: 'myusername',
       display: 'mydisplayname',
       password: 'mypassword',

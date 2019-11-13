@@ -24,6 +24,7 @@ import { WeekModule } from './components/week/week.module';
 import { ProfileModule } from './components/profile/profile.module';
 import { MyRouterStateSerializer } from './shared/store/helpers/router.helper';
 import { WeekEffects } from './shared/store/effects/week.effect';
+import { AthleteEffets } from './shared/store/effects/athlete.effects';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { WeekEffects } from './shared/store/effects/week.effect';
     CoreModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([
+      AthleteEffets,
       AuthEffects, 
       WeekEffects
     ]),

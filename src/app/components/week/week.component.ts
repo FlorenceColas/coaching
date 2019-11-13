@@ -14,6 +14,10 @@ import { DateTools } from 'src/app/shared/classes/date-tools.classes';
 import { MatDialog, MatDialogConfig, DialogPosition } from '@angular/material';
 import { DayDialogComponent } from './shared/components/day-dialog/day-dialog.component';
 import { AthleteState } from 'src/app/shared/store/reducers/athlete.reducer';
+import { TryFetchAthletes } from 'src/app/shared/store/actions/athlete.actions';
+import { currentUserSelector } from 'src/app/shared/store/selectors/auth.selectors';
+import { User } from 'src/app/shared/models/user.model';
+import { TryFetchCurrentUser } from 'src/app/shared/store/actions/auth.actions';
 
 @Component({
   selector: 'app-week',
@@ -27,6 +31,7 @@ export class WeekComponent implements OnInit, OnDestroy {
   public weekActivities$: Observable<{ day: { day: number, date: number }, activities: Activity[] }[]>;
   private subscription: Subscription;
   public atheletes: Observable<AthleteState>;
+  private userId: number;
 
   constructor(
     private router: Router,
@@ -42,6 +47,14 @@ export class WeekComponent implements OnInit, OnDestroy {
     });
 
     this.week$ = this.store.pipe(select(weekDetailsSelector));
+
+    this.store.pipe(select(currentUserSelector)).subscribe( (user: User) => 
+    {
+      console.log(user);
+      this.userId = user.id
+    });
+   // this.store.dispatch(new TryFetchAthletes(this.userId));
+    console.log(this.userId);
 
     this.store.dispatch(new FetchWeekActivities({ week: this.weekNumber, year: this.year }));
 

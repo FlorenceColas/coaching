@@ -38,12 +38,14 @@ describe('*** Auth Reducer ***', () => {
   it('should have user when SetCurrentUser action', () => {
     const { initialAuthState } = AuthReducer;
     const action = new AuthActions.SetCurrentUser({
+      id: 1,
       username: 'myusername',
       display: 'mydisplayname',
       password: 'mypassword'
     });
     const state = AuthReducer.authReducer(initialAuthState, action);
     expect(state.user).toEqual({
+      id: 1,
       username: 'myusername',
       display: 'mydisplayname',
       password: 'mypassword'

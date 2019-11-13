@@ -11,7 +11,7 @@ export class AthleteService {
 
   constructor(private http: HttpClient) {}
 
-  public fetchAthletes(coachId: number): Observable<Athlete[]> {
+  public tryFetchAthletes(coachId: number): Observable<Athlete[]> {
     return this.http.get<Athlete[]>(this.uri + '/api/rest/v1/athletes/' + coachId);
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { empty } from "rxjs";
-import { FetchAthletes, AthleteActionTypes, SetAthletes } from '../actions/athlete.actions';
+import { TryFetchAthletes, AthleteActionTypes, SetAthletes } from '../actions/athlete.actions';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { Athlete } from '../reducers/athlete.reducer';
 import { AthleteService } from '../../services/athlete.service';
@@ -15,10 +15,10 @@ export class AthleteEffets {
   ) {}
 
   @Effect()
-  fetchAthletes$ = this.actions$.pipe(
-    ofType<FetchAthletes>(AthleteActionTypes.FETCH_ATHLETES),
-    map( (action: FetchAthletes) => action.payload),
-    switchMap( (coachId: number) => this.athleteService.fetchAthletes(coachId) ),
+  tryFetchAthletes$ = this.actions$.pipe(
+    ofType<TryFetchAthletes>(AthleteActionTypes.TRY_FETCH_ATHLETES),
+    map( (action: TryFetchAthletes) => action.payload),
+    switchMap( (coachId: number) => this.athleteService.tryFetchAthletes(coachId) ),
     tap( (athletes: Athlete[]) => new SetAthletes(athletes) ),
     catchError( (err: any) => {
       console.log(err);

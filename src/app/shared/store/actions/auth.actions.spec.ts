@@ -11,6 +11,7 @@ describe('*** Auth Actions ***', () => {
 
   it('should create a SetCurrentUser action', () => {
     const payload= {
+      id: 1,
       username: 'myusername',
       display: 'mydisplayname',
       password: 'mypassword'

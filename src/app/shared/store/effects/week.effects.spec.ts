@@ -36,7 +36,7 @@ describe('*** Auth Effects ***', () => {
           year: '2019',
           activities: []
         };
-        spyOn(weekService, 'fetchActivities').and.returnValue(of(mockActivityResult));
+        jasmine.createSpy('fetchActivities').and.returnValue(of(mockActivityResult));
         actions = hot('---a-', { a: new WeekActions.FetchWeekActivities({
           week: '34',
           year: '2019'
@@ -734,7 +734,7 @@ describe('*** Auth Effects ***', () => {
       });
 
       it('should return empty due to weekService error', () => {
-        spyOn(weekService, 'fetchActivities').and.returnValue(cold('-#|', {}, 'error'));
+        jasmine.createSpy('fetchActivities').and.returnValue(cold('-#|', {}, 'error'));
         actions = hot('---a-', { a: new WeekActions.FetchWeekActivities({
           week: '34',
           year: '2019'
