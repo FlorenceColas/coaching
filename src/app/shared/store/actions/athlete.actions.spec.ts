@@ -4,10 +4,9 @@ describe('*** Athlete Actions ***', () => {
   
   it('should create a TryFetchAthletes action', () => {
     const payload = 1;
-    const action = new AthleteActions.TryFetchAthletes(payload);
+    const action = new AthleteActions.TryFetchAthletes();
     expect({ ... action }).toEqual({
-      type: AthleteActions.AthleteActionTypes.TRY_FETCH_ATHLETES,
-      payload
+      type: AthleteActions.AthleteActionTypes.TRY_FETCH_ATHLETES
     });
   });
 

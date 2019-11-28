@@ -8,13 +8,11 @@ export interface Athlete {
 export interface AthleteState {
   athletes: Athlete[];
   current: Athlete;
-  isCurrentAthlete: boolean;
 }
 
 export const initialAthleteState: AthleteState = {
   athletes: null,
-  current: null,
-  isCurrentAthlete: false
+  current: null
 }
 
 export function athleteReducer(

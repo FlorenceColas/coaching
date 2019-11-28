@@ -5,7 +5,6 @@ import { Store, select } from '@ngrx/store';
 import { User } from 'src/app/shared/models/user.model';
 import { State } from 'src/app/shared/store';
 import { currentUserSelector } from 'src/app/shared/store/selectors/auth.selectors';
-import { TryFetchCurrentUser } from 'src/app/shared/store/actions/auth.actions';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +18,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser$ = this.store.pipe(select(currentUserSelector));
-    this.store.dispatch(new TryFetchCurrentUser());
   }
 
 }

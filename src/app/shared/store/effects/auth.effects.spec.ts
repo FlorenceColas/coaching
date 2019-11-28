@@ -9,6 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '../../services/user.service';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as AuthActions from '../actions/auth.actions';
+import * as AthletesActions from '../actions/athlete.actions';
 import { hot, cold } from 'jasmine-marbles';
 import { reducers, State } from '../index';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
@@ -106,12 +107,15 @@ describe('*** Auth Effects ***', () => {
         password: 'mypassword'
       }));
       actions = hot('---a-', { a: new AuthActions.TryFetchCurrentUser() });
-      const expected = cold('---b', { b: new AuthActions.SetCurrentUser({
-        id: 1,
-        username: 'myusername',
-        display: 'mydisplayname',
-        password: 'mypassword'
-      }) });
+      const expected = cold('---(bc)', { 
+        b: new AuthActions.SetCurrentUser({
+          id: 1,
+          username: 'myusername',
+          display: 'mydisplayname',
+          password: 'mypassword'
+        }),
+        c: new AthletesActions.TryFetchAthletes() 
+      });
       expect(effects.tryFetchCurrentUser$).toBeObservable(expected);
     });
 
@@ -139,7 +143,10 @@ describe('*** Auth Effects ***', () => {
         
       spyOn(authService, 'refreshToken').and.returnValue(of('myjwt'));
       actions = hot('---a-', { a: new AuthActions.TryRefreskToken() });
-      const expected = cold('---b', { b: new AuthActions.SigninSuccess('myjwt') });
+      const expected = cold('---(bc)', { 
+        b: new AuthActions.SigninSuccess('myjwt'),
+        c: new AuthActions.TryFetchCurrentUser(),
+      });
       expect(effects.tryRefreshToken$).toBeObservable(expected);
     });
   
@@ -183,7 +190,10 @@ describe('*** Auth Effects ***', () => {
     it('should return SigninSuccess action', () => {
       spyOn(authService, 'signIn').and.returnValue(of('myjwt'));
       actions = hot('---a-', { a: new AuthActions.TrySignin({ username: 'myusername', password: 'mypassword' }) });
-      const expected = cold('---b', { b: new AuthActions.SigninSuccess('myjwt')});
+      const expected = cold('---(bc)', { 
+        b: new AuthActions.SigninSuccess('myjwt'), 
+        c: new AuthActions.TryFetchCurrentUser(),
+      });
       expect(effects.trySignin$).toBeObservable(expected);
     });
   

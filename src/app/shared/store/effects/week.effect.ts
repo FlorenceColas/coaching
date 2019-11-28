@@ -1,25 +1,30 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { empty } from "rxjs";
+import { empty, of } from "rxjs";
 import * as moment from 'moment';
 
 import { WeekService, ServiceResult } from '../../../components/week/week.service';
 import { WeekActionTypes, FetchWeekActivities, SetWeekActivities } from "../actions/week.actions";
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { Activity } from "../reducers/week.reducer";
+import { Store, select } from '@ngrx/store';
+import { State } from '..';
+import { currentAthleteSelector } from '../selectors/athlete.selectors';
 
 @Injectable()
 export class WeekEffects {
   constructor(
     private actions$: Actions,
-    private weekService: WeekService
+    private weekService: WeekService,
+    private store: Store<State>
   ) {}
 
   @Effect()
   fetchWeekActivities$ = this.actions$.pipe(
     ofType<FetchWeekActivities>(WeekActionTypes.FETCH_WEEK_ACTIVITIES),
-    switchMap( (action: FetchWeekActivities) => this.weekService.fetchActivities(action.payload.week, action.payload.year)),
-    map( (serviceResult: ServiceResult) => {
+    withLatestFrom(this.store.pipe(select(currentAthleteSelector))),
+    switchMap( ([action, athlete]) => this.weekService.fetchActivities(action.payload.week, action.payload.year, athlete) ),
+    switchMap( (serviceResult: ServiceResult, index) => {
       let newActivities: { day: {day: number, date: number }, activities: Activity[] }[] = new Array;
       const selectedDate = moment().weekday(1).year(parseInt(serviceResult.year)).week(parseInt(serviceResult.week)).hour(1).minute(0).second(0).millisecond(0);
  
@@ -56,7 +61,7 @@ export class WeekEffects {
  
         newActivities.push({ day: { day: i, date: parseInt(weekStart) }, activities: newDayActities});
       }
-      return new SetWeekActivities(newActivities) 
+      return of(new SetWeekActivities(newActivities));
     }),
     catchError( (err: any) => {
       console.log(err);

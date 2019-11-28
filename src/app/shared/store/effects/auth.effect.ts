@@ -3,14 +3,15 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { map, switchMap, exhaustMap, catchError, tap, withLatestFrom } from 'rxjs/operators';
 import { of, empty, Subscription } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
 import { AuthService } from '../../services/auth.service';
 import { TrySignin, AuthActionTypes, SigninSuccess, SigninError, TryRefreskToken, Logout, TryFetchCurrentUser, SetCurrentUser } from '../actions/auth.actions';
-import { Store, select } from '@ngrx/store';
 import { State } from '..';
 import { tokenSelector } from '../selectors/auth.selectors';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
+import { TryFetchAthletes } from '../actions/athlete.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -58,8 +59,12 @@ export class AuthEffects {
   @Effect()
   tryFetchCurrentUser$ = this.actions$.pipe(
     ofType<TryFetchCurrentUser>(AuthActionTypes.TRY_FETCH_CURRENT_USER),
+    withLatestFrom(this.store.pipe(select(tokenSelector))),
     switchMap( () => this.userService.getCurrentUser()),
-    map( (user: User) => new SetCurrentUser(user)),
+    switchMap( (user: User, index: number) => [
+      new SetCurrentUser(user),
+      new TryFetchAthletes(),
+    ]),
     catchError( () => {
       return empty();
     })
@@ -69,10 +74,13 @@ export class AuthEffects {
   tryRefreshToken$ = this.actions$.pipe(
     ofType<TryRefreskToken>(AuthActionTypes.TRY_REFRESH_TOKEN),
     withLatestFrom(this.store.pipe(select(tokenSelector))),
-    switchMap( ([action, token]) => {
+    switchMap( ([action, token]) => {      
       if (token) {
         return this.authService.refreshToken().pipe(
-          map( (newToken: string) => new SigninSuccess(newToken)),
+          switchMap( (newToken: string) => [
+            new SigninSuccess(newToken),
+            new TryFetchCurrentUser(),
+          ]),
           catchError( () => {
             localStorage.removeItem('jwt');
             if (this.subscription) {
@@ -93,7 +101,10 @@ export class AuthEffects {
     map( (action: TrySignin) => action.payload ),
     exhaustMap( (credentials: { username: string, password: string }) => 
       this.authService.signIn(credentials).pipe(
-        map( (token: string, id: number) => new SigninSuccess(token) ),
+        switchMap( (token: string) => [
+          new SigninSuccess(token),
+          new TryFetchCurrentUser(),
+        ]), 
         catchError( (err: any) => of(new SigninError(err)) )
       )
     )

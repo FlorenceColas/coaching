@@ -1,7 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Activity } from 'src/app/shared/store/reducers/week.reducer';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivityService } from 'src/app/shared/services/activity.service';
+import { Subscription } from 'rxjs';
+import { Athlete } from 'src/app/shared/store/reducers/athlete.reducer';
+import { Store, select } from '@ngrx/store';
+import { State } from 'src/app/shared/store';
+import { currentAthleteSelector } from 'src/app/shared/store/selectors/athlete.selectors';
 
 export interface Type {
   value: string;
@@ -13,7 +18,7 @@ export interface Type {
   templateUrl: './day-fitness.component.html',
   styleUrls: ['./day-fitness.component.css']
 })
-export class DayFitnessComponent implements OnInit {
+export class DayFitnessComponent implements OnInit, OnDestroy {
   @Input() activityDetail: Activity;
   public types: Type[] = [
     {value: '8', viewValue: 'Core & strength'},
@@ -21,10 +26,13 @@ export class DayFitnessComponent implements OnInit {
   ];
   public form: FormGroup;
   public saveButtonDisabled: boolean = true;
+  private subscription: Subscription;
+  public currentAthlete: Athlete;
 
   constructor(
     private fb: FormBuilder,
     private activityService: ActivityService,
+    private store: Store<State>
   ) { }
 
   ngOnInit() {
@@ -38,12 +46,20 @@ export class DayFitnessComponent implements OnInit {
         this.saveButtonDisabled = false;
       }
     });
+
+    this.subscription = this.store.pipe(select(currentAthleteSelector)).subscribe( (athlete: Athlete) => {
+      this.currentAthlete = athlete;
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   public save() {
     const data = {
       activity_date: this.activityDetail.activityDay,
-      athletes_users_id: 1,
+      athletes_users_id: this.currentAthlete.id,
       categories_id: this.activityDetail.categoryId, 
       planned: 1, 
       planned_time: this.form.get('plannedTime').value,

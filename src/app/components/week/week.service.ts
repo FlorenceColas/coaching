@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { Activity } from 'src/app/shared/store/reducers/week.reducer';
+import { Athlete } from 'src/app/shared/store/reducers/athlete.reducer';
 
 export interface ServiceResult {
   week: string,
@@ -18,7 +19,7 @@ export class WeekService {
 
   constructor(private http: HttpClient) {}
 
-  public fetchActivities(week: string, year: string): Observable<ServiceResult> {
-    return this.http.get<ServiceResult>(this.uri + '/api/rest/v1/activities/' + week + '/' + year + '/1');
+  public fetchActivities(week: string, year: string, athlete: Athlete): Observable<ServiceResult> {
+    return this.http.get<ServiceResult>(this.uri + '/api/rest/v1/activities/' + week + '/' + year + '/' + athlete.id);
   }
 }

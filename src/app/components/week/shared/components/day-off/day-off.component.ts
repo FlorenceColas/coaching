@@ -1,21 +1,29 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Activity } from 'src/app/shared/store/reducers/week.reducer';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivityService } from 'src/app/shared/services/activity.service';
+import { Subscription } from 'rxjs';
+import { Athlete } from 'src/app/shared/store/reducers/athlete.reducer';
+import { currentAthleteSelector } from 'src/app/shared/store/selectors/athlete.selectors';
+import { select, Store } from '@ngrx/store';
+import { State } from 'src/app/shared/store';
 
 @Component({
   selector: 'app-day-off',
   templateUrl: './day-off.component.html',
   styleUrls: ['./day-off.component.css']
 })
-export class DayOffComponent implements OnInit {
+export class DayOffComponent implements OnInit, OnDestroy {
   @Input() activityDetail: Activity;
   public form: FormGroup;
   public saveButtonDisabled: boolean = true;
+  private subscription: Subscription;
+  public currentAthlete: Athlete;
 
   constructor(
     private fb: FormBuilder,
-    private activityService: ActivityService
+    private activityService: ActivityService,
+    private store: Store<State>
   ) { }
 
   ngOnInit() {
@@ -37,12 +45,20 @@ export class DayOffComponent implements OnInit {
         this.saveButtonDisabled = false;
       }
     });
+
+    this.subscription = this.store.pipe(select(currentAthleteSelector)).subscribe( (athlete: Athlete) => {
+      this.currentAthlete = athlete;
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   public save() {
     const data = {
       activity_date: this.activityDetail.activityDay,
-      athletes_users_id: 1,
+      athletes_users_id: this.currentAthlete.id,
       categories_id: this.activityDetail.categoryId, 
       planned: 1, 
     };

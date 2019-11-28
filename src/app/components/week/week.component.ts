@@ -13,11 +13,10 @@ import { FetchWeekActivities, SetWeekDetails, SetCurrentWeek } from 'src/app/sha
 import { DateTools } from 'src/app/shared/classes/date-tools.classes';
 import { MatDialog, MatDialogConfig, DialogPosition } from '@angular/material';
 import { DayDialogComponent } from './shared/components/day-dialog/day-dialog.component';
-import { AthleteState } from 'src/app/shared/store/reducers/athlete.reducer';
-import { TryFetchAthletes } from 'src/app/shared/store/actions/athlete.actions';
-import { currentUserSelector } from 'src/app/shared/store/selectors/auth.selectors';
-import { User } from 'src/app/shared/models/user.model';
-import { TryFetchCurrentUser } from 'src/app/shared/store/actions/auth.actions';
+import { AthleteState, Athlete } from 'src/app/shared/store/reducers/athlete.reducer';
+import { AthletesSelector, allAthletesSelector, currentAthleteSelector } from 'src/app/shared/store/selectors/athlete.selectors';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { TrySetCurrentAthlete } from 'src/app/shared/store/actions/athlete.actions';
 
 @Component({
   selector: 'app-week',
@@ -30,14 +29,16 @@ export class WeekComponent implements OnInit, OnDestroy {
   public week$: Observable<Week>;
   public weekActivities$: Observable<{ day: { day: number, date: number }, activities: Activity[] }[]>;
   private subscription: Subscription;
-  public atheletes: Observable<AthleteState>;
-  private userId: number;
+  public athletes$: Observable<Athlete[]>;
+  public currentAthlete: Athlete;
+  public form: FormGroup;
 
   constructor(
     private router: Router,
     @Inject(LOCALE_ID) protected localeId: string,
     private store: Store<State>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private fb: FormBuilder,
   ) { }
   
   ngOnInit() {
@@ -45,24 +46,28 @@ export class WeekComponent implements OnInit, OnDestroy {
       this.weekNumber = routerStateUrl.params.week;
       this.year = routerStateUrl.params.year;
     });
+    
+    this.subscription.add(this.store.pipe(select(currentAthleteSelector)).subscribe( (athlete: Athlete) => {
+      this.currentAthlete = athlete;
+      if (athlete != null) {
+        this.form = this.fb.group({
+          athlete: [this.currentAthlete],
+        });
+      }
+    }));
 
     this.week$ = this.store.pipe(select(weekDetailsSelector));
-
-    this.store.pipe(select(currentUserSelector)).subscribe( (user: User) => 
-    {
-      console.log(user);
-      this.userId = user.id
-    });
-   // this.store.dispatch(new TryFetchAthletes(this.userId));
-    console.log(this.userId);
-
-    this.store.dispatch(new FetchWeekActivities({ week: this.weekNumber, year: this.year }));
-
+    this.athletes$ = this.store.pipe(select(allAthletesSelector));
     this.weekActivities$ = this.store.pipe(select(weekDaysSelector));
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  public changeAthlete(athleteId: number) {
+    this.store.dispatch(new TrySetCurrentAthlete(athleteId));
+    this.store.dispatch(new FetchWeekActivities({ week: '48', year: '2019'}));
   }
 
   public navigateToWeek(w: { week: string, year: string }) {

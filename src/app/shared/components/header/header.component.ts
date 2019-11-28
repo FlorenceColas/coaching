@@ -6,7 +6,6 @@ import { State } from '../../store';
 import { isLoggedinSelector } from '../../store/selectors/auth.selectors';
 import { Logout } from '../../store/actions/auth.actions';
 import { currentWeekNumberSelector, currentWeekYearSelector } from '../../store/selectors/week.selectors';
-import { isCurrentAthleteSelector } from '../../store/selectors/athlete.selectors';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +16,6 @@ export class HeaderComponent implements OnInit {
   public currentWeekNumber$: Observable<string>;
   public currentWeekYear$: Observable<string>;
   public isLoggedin$: Observable<boolean>;
-  public isCurrentAthlete$: Observable<boolean>;
 
   constructor(
     private store: Store<State>
@@ -27,7 +25,6 @@ export class HeaderComponent implements OnInit {
     this.currentWeekNumber$ = this.store.pipe(select(currentWeekNumberSelector));
     this.currentWeekYear$ = this.store.pipe(select(currentWeekYearSelector));
     this.isLoggedin$ = this.store.pipe(select(isLoggedinSelector));
-    this.isCurrentAthlete$ = this.store.pipe(select(isCurrentAthleteSelector));
   }
 
   public logout(): void {

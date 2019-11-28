@@ -6,11 +6,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { hot, cold } from 'jasmine-marbles';
 import * as WeekActions from '../actions/week.actions';
+import { MockStore } from '@ngrx/store/testing';
+import { State, reducers } from '..';
+import { StoreModule, Store } from '@ngrx/store';
 
 describe('*** Week Effects ***', () => {
   let effects: WeekEffects;
   let actions: Observable<any>;
   let weekService: WeekService;
+  let store: MockStore<State>;
 
   beforeAll( () => {
     TestBed.resetTestingModule();
@@ -18,6 +22,7 @@ describe('*** Week Effects ***', () => {
     TestBed.configureTestingModule( {
       imports: [
         HttpClientModule,
+        StoreModule.forRoot(reducers),
       ],
       providers: [
         WeekEffects,
@@ -28,6 +33,7 @@ describe('*** Week Effects ***', () => {
 
     effects = TestBed.get(WeekEffects);
     weekService = TestBed.get(WeekService);
+    store = TestBed.get<Store<State>>(Store);
   });
 
     describe('** fetchWeekActivities$ **', () => {

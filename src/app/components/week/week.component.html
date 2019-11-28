@@ -1,5 +1,29 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+<div fxLayout="row" fxLayoutAlign="center center" class="athlete">
+  <div class="col text-right">
+      Athlete : 
+  </div>
+  <div class="col text-left">
+    <div *ngIf="currentAthlete != null">
+      <div *ngIf="athletes$ | async;let athletes">
+          <div *ngIf="athletes.length>1">
+            <form [formGroup]="form">
+              <select formControlName="athlete" #selectedAthlete [value]="currentAthlete.id" (change)="changeAthlete(selectedAthlete.value)">
+                <option *ngFor="let athlete of athletes" [value]="athlete.id">
+                  {{ athlete.name }}
+                </option>
+              </select>
+            </form>
+          </div>
+          <div *ngIf="athletes.length==1">
+            {{currentAthlete.name}}
+          </div>
+      </div>
+    </div>  
+  </div>  
+</div>
+
 <div *ngIf="(week$ | async); let week">
   <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
     <div class="col col-2">

@@ -22,13 +22,3 @@ export const currentAthleteSelector = createSelector(
     }
   }
 );
-export const isCurrentAthleteSelector = createSelector(
-  AthletesSelector,
-  (athleteState: AthleteState) => {
-    if (athleteState) {
-      return athleteState.isCurrentAthlete;
-    } else {
-      return false;
-    }
-  }
-);
