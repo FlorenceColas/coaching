@@ -25,6 +25,11 @@ export function authReducer(state: AuthState = initialAuthState, action: AuthAct
         error: null,
         user: null
       }
+    case AuthActionTypes.SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload,
+      }
     case AuthActionTypes.SIGNIN_ERROR:
       return {
         ...state,

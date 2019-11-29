@@ -23,6 +23,15 @@ describe('*** Auth Actions ***', () => {
     });
   });
 
+  it('should create a SetToken action', () => {
+    const payload = 'my-new-token!';
+    const action = new AuthActions.SetToken(payload);
+    expect({ ... action }).toEqual({
+      type: AuthActions.AuthActionTypes.SET_TOKEN,
+      payload
+    });
+  });
+
   it('should create a SigninError action', () => {
     const payload= {
       error: 'error'

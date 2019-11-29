@@ -128,7 +128,7 @@ describe('*** Auth Effects ***', () => {
   });
 
   describe('** tryRefreshToken$ effect **', () => {
-    it('should return SigninSuccess action', () => {
+    it('should return SetToken action', () => {
       store.setState({ 
         auth: {
           user: null,
@@ -143,9 +143,8 @@ describe('*** Auth Effects ***', () => {
         
       spyOn(authService, 'refreshToken').and.returnValue(of('myjwt'));
       actions = hot('---a-', { a: new AuthActions.TryRefreskToken() });
-      const expected = cold('---(bc)', { 
-        b: new AuthActions.SigninSuccess('myjwt'),
-        c: new AuthActions.TryFetchCurrentUser(),
+      const expected = cold('---b', { 
+        b: new AuthActions.SetToken('myjwt'),
       });
       expect(effects.tryRefreshToken$).toBeObservable(expected);
     });

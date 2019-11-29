@@ -6,7 +6,7 @@ import { of, empty, Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
 import { AuthService } from '../../services/auth.service';
-import { TrySignin, AuthActionTypes, SigninSuccess, SigninError, TryRefreskToken, Logout, TryFetchCurrentUser, SetCurrentUser } from '../actions/auth.actions';
+import { TrySignin, AuthActionTypes, SigninSuccess, SigninError, TryRefreskToken, Logout, TryFetchCurrentUser, SetCurrentUser, SetToken } from '../actions/auth.actions';
 import { State } from '..';
 import { tokenSelector } from '../selectors/auth.selectors';
 import { UserService } from '../../services/user.service';
@@ -78,8 +78,7 @@ export class AuthEffects {
       if (token) {
         return this.authService.refreshToken().pipe(
           switchMap( (newToken: string) => [
-            new SigninSuccess(newToken),
-            new TryFetchCurrentUser(),
+            new SetToken(newToken),
           ]),
           catchError( () => {
             localStorage.removeItem('jwt');

@@ -52,4 +52,10 @@ describe('*** Auth Reducer ***', () => {
     });
   });
 
+  it('should have token when SetToken action', () => {
+    const { initialAuthState } = AuthReducer;
+    const action = new AuthActions.SetToken('my-new-token!');
+    const state = AuthReducer.authReducer(initialAuthState, action);
+    expect(state.token).toEqual('my-new-token!');
+  });
 });
