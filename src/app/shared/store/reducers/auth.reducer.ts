@@ -29,6 +29,8 @@ export function authReducer(state: AuthState = initialAuthState, action: AuthAct
       return {
         ...state,
         token: action.payload,
+        isLoggedin: true,
+        error: null
       }
     case AuthActionTypes.SIGNIN_ERROR:
       return {

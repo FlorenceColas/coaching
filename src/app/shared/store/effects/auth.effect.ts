@@ -79,6 +79,7 @@ export class AuthEffects {
         return this.authService.refreshToken().pipe(
           switchMap( (newToken: string) => [
             new SetToken(newToken),
+         //   new TryFetchCurrentUser(),
           ]),
           catchError( () => {
             localStorage.removeItem('jwt');
