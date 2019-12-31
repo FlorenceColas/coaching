@@ -33,7 +33,7 @@ export class ActivityService {
       () => {
         const day: number = values.activity_date;
         const week: number = moment(day).isoWeek();
-        const year: number = moment(day).year();
+        const year: number = moment(day).isoWeekYear();
         this.store.dispatch(new FetchWeekActivities({ week: week.toString(), year: year.toString()}));
       },
       (err) => console.log(err)
@@ -70,7 +70,7 @@ export class ActivityService {
       () => {
         const day: number = values.activity_date;
         const week: number = moment(day).isoWeek();
-        const year: number = moment(day).year();
+        const year: number = moment(day).isoWeekYear();
         this.store.dispatch(new FetchWeekActivities({ week: week.toString(), year: year.toString()}));
       },
       (err) => console.log(err)
