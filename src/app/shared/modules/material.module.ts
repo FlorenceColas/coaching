@@ -14,8 +14,10 @@ import {
   MatSelectModule,
   MatTooltipModule,
 } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 const MATERIAL_MODULES = [
+  FormsModule,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,

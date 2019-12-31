@@ -11,12 +11,13 @@ import { Week, Activity } from 'src/app/shared/store/reducers/week.reducer';
 import { weekDetailsSelector, weekDaysSelector } from 'src/app/shared/store/selectors/week.selectors';
 import { FetchWeekActivities, SetWeekDetails, SetCurrentWeek } from 'src/app/shared/store/actions/week.actions';
 import { DateTools } from 'src/app/shared/classes/date-tools.classes';
-import { MatDialog, MatDialogConfig, DialogPosition } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DayDialogComponent } from './shared/components/day-dialog/day-dialog.component';
-import { AthleteState, Athlete } from 'src/app/shared/store/reducers/athlete.reducer';
-import { AthletesSelector, allAthletesSelector, currentAthleteSelector } from 'src/app/shared/store/selectors/athlete.selectors';
+import { Athlete } from 'src/app/shared/store/reducers/athlete.reducer';
+import { allAthletesSelector, currentAthleteSelector } from 'src/app/shared/store/selectors/athlete.selectors';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TrySetCurrentAthlete } from 'src/app/shared/store/actions/athlete.actions';
+import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-week',
@@ -93,18 +94,10 @@ export class WeekComponent implements OnInit, OnDestroy {
 
   public dayAllDialog(dayIndex: number) {
     const dialogConfig = new MatDialogConfig();
+//    dialogConfig.height = '90%';
+//    dialogConfig.width = 'calc(100%)';
     dialogConfig.data = {
       dayIndex: dayIndex
-    };
-
-    this.dialog.open(DayDialogComponent, dialogConfig);
-  }
-
-  public dayDialog(dayIndex: number, activityIndex: number) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      dayIndex: dayIndex,
-      activityIndex: activityIndex
     };
 
     this.dialog.open(DayDialogComponent, dialogConfig);

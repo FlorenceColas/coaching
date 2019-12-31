@@ -24,6 +24,8 @@ export class DayDialogComponent implements OnInit {
   public dayIndex: number;
   public form: FormGroup;
   public dayActivities$: Observable<DayActivities>;
+  public done = true;
+  public withUpdates = false;
 
   constructor(
     private fb: FormBuilder,
@@ -37,6 +39,10 @@ export class DayDialogComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       dayIndex: [this.dayIndex, []],
+      id: 0,
+      realisedContent: '',
+      realisedDistance: 0,
+      realisedTime: 0,
     });
 
     this.dayActivities$ = this.store.select(getDayById(this.dayIndex));
@@ -44,5 +50,10 @@ export class DayDialogComponent implements OnInit {
 
   public close() {
     this.dialogRef.close();
+  }
+
+  public activityStatusChange(event) {
+    console.log(event);
+    console.log(event.value);
   }
 }

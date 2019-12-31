@@ -21,13 +21,14 @@ export class ActivityColorDirective implements OnInit {
     name: string, 
     status: number, 
     planned: number, 
-    resume: boolean
+    resume: boolean,
+    view: string
   };   
 
   constructor() { }
 
   ngOnInit() {
-    if (this.activityName.planned == 1) {
+    if ((this.activityName.planned == 1 && this.activityName.view == 'planned') || (this.activityName.status == 1 && this.activityName.view == 'realised' )) {
       this.backgroundColor = ACTIVITIES_COLORS[this.activityName.name]['planned'];
       this.color = 'white';
       this.fontWeight = 'bold';

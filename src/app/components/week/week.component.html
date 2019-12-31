@@ -56,8 +56,8 @@
         <div *ngFor="let act of w.activities; let actIndex = index" class="text-center">
           <ul class="list-group">
             <li class="list-group-item text-center" 
-              (click)="dayDialog(dayIndex, actIndex)"
-              [appActivityColor]="{ name: act.categoryId, status: act.state, planned: act.planned, resume: true }"> 
+              (click)="dayAllDialog(dayIndex)"
+              [appActivityColor]="{ name: act.categoryId, status: act.state, planned: act.planned, resume: true, view: 'planned' }"> 
               {{ act.categoryId | uppercase }}
               <mat-icon *ngIf="act.state == 0" aria-hidden="false" class="float-right">close</mat-icon>
               <mat-icon *ngIf="act.state == 1" aria-hidden="false" class="float-right">done</mat-icon>

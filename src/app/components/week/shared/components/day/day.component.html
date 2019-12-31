@@ -1,10 +1,4 @@
 <form [formGroup]="form">
-
-  <span fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="15px"
-    *ngIf="activityDetail.categoryId == 'off'">
-    <button mat-raised-button color="primary">Save day OFF</button>
-  </span>
-    
   <span *ngIf="activityDetail.categoryId == 'swim' || activityDetail.categoryId == 'bike' || activityDetail.categoryId == 'run'">
     <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
         <mat-form-field>
@@ -22,6 +16,8 @@
         class="link" (click)="helpSwim()">
         help
       </mat-icon>
+    </span>
+    <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
       <mat-form-field class="example-full-width">
         <input matInput type="number" formControlName="plannedDistance" placeholder="Distance (km)">
       </mat-form-field>
@@ -30,7 +26,7 @@
       </mat-form-field>
     </span>
     <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-        <textarea formControlName="plannedContent" placeholder="Content" cols="70" rows="5"></textarea>
+      <textarea formControlName="plannedContent" placeholder="Content" cols="50" rows="5"></textarea>
     </span>
     <hr>
     <span fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="end center">

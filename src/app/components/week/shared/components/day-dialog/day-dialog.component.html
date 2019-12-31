@@ -3,23 +3,58 @@
 
   <hr>
 
-  <mat-dialog-content [formGroup]="form">
-      <div *ngFor="let act of dayActivities.activities">
-        <mat-accordion multi="true">
-          <mat-expansion-panel [expanded]="act.planned == 1">
-            <mat-expansion-panel-header [appActivityColor]="{ name: act.categoryId, status: act.state, planned: act.planned, resume: false }">
-              <mat-panel-title>
-                {{ act.categoryId | uppercase }}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-              <app-day-off *ngIf="act.categoryId == 'off'" [activityDetail]="act"></app-day-off> 
-              <app-day *ngIf="act.categoryId == 'swim' || act.categoryId == 'bike' || act.categoryId == 'run'" [activityDetail]="act"></app-day> 
-              <app-day-fitness *ngIf="act.categoryId == 'fitness'" [activityDetail]="act"></app-day-fitness> 
-              <app-day-race *ngIf="act.categoryId == 'race'" [activityDetail]="act"></app-day-race> 
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
-  </mat-dialog-content>
+  <div fxLayout="row" fxLayoutAlign="center top">
+    <div class="col">
+      <div style="background-color:goldenrod;text-align: center;">Planned</div>
+      <br>
+      <mat-dialog-content [formGroup]="form">
+        <div *ngFor="let act of dayActivities.activities">
+          <mat-accordion multi="true">
+            <mat-expansion-panel><!--[expanded]="act.planned == 1"-->
+              <mat-expansion-panel-header [appActivityColor]="{ name: act.categoryId, status: act.state, planned: act.planned, resume: false, view: 'planned' }">
+                <mat-panel-title>
+                  {{ act.categoryId | uppercase }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+                <app-day-off *ngIf="act.categoryId == 'off'" [activityDetail]="act"></app-day-off> 
+                <app-day *ngIf="act.categoryId == 'swim' || act.categoryId == 'bike' || act.categoryId == 'run'" [activityDetail]="act"></app-day> 
+                <app-day-fitness *ngIf="act.categoryId == 'fitness'" [activityDetail]="act"></app-day-fitness> 
+                <app-day-race *ngIf="act.categoryId == 'race'" [activityDetail]="act"></app-day-race> 
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </mat-dialog-content>
+    </div>
+
+    <div class="col text-left" style="width:450px;">
+      <div style="background-color:yellowgreen;text-align: center;">Realised</div>
+      <br>
+      <mat-dialog-content [formGroup]="form">
+        <div *ngFor="let act of dayActivities.activities" fxLayoutGap="15px">
+          <mat-card>
+            <label [appActivityColor]="{ name: act.categoryId, status: act.state, planned: act.planned, resume: false, view: 'realised' }" style="width: 85px;border-radius: 5%;padding-left: 10px;">
+              {{ act.categoryId | uppercase }}
+            </label>
+            <span style="align-content: flex-end;vertical-align: middle;">
+              <mat-radio-group [value]="act.state" class="col text-left">
+                <mat-radio-button value="1" (change)="activityStatusChange($event)">Done
+                </mat-radio-button>
+                <mat-radio-button *ngIf="act.planned==1" style="margin-left: 10px;" value="0" (change)="activityStatusChange($event)">Not done</mat-radio-button>
+              </mat-radio-group>
+            </span>
+            <div *ngIf="act.state==1 && act.categoryId != 'off'">
+              <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                <textarea formControlName="realisedContent" placeholder="Comment" cols="50" rows="5"></textarea>
+              </span>
+              <div>
+                <button mat-raised-button>Save</button>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </mat-dialog-content>
+    </div>
+  </div>
 
   <hr>
 
