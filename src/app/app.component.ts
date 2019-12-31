@@ -21,13 +21,14 @@ export class AppComponent {
     this.store.dispatch(new TryRefreskToken());
 
     const week: number = moment(new Date().getTime()).isoWeek();
-    const year: number = moment(new Date().getTime()).year();
+    const year: number = moment(new Date().getTime()).isoWeekYear();
 
-    this.store.dispatch(new SetCurrentWeek({ week: week.toString(), year: year.toString() }));
+    var selectedDate = moment().day("Tuesday").isoWeekYear(year).isoWeek(week);
 
-    var selectedDate = moment().day("Tuesday").year(year).week(week);
     var weekStart = selectedDate.clone().startOf('isoWeek').format('x');
     var weekEnd = selectedDate.clone().endOf('isoWeek').format('x');
+
+    this.store.dispatch(new SetCurrentWeek({ week: week.toString(), year: year.toString() }));
 
     const weekDetails: Week = {
       nextWeek: DateTools.getNextWeek(week.toString(), year.toString()),

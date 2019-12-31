@@ -26,7 +26,7 @@ export class WeekEffects {
     switchMap( ([action, athlete]) => this.weekService.fetchActivities(action.payload.week, action.payload.year, athlete) ),
     switchMap( (serviceResult: ServiceResult, index) => {
       let newActivities: { day: {day: number, date: number }, activities: Activity[] }[] = new Array;
-      const selectedDate = moment().weekday(1).year(parseInt(serviceResult.year)).week(parseInt(serviceResult.week)).hour(1).minute(0).second(0).millisecond(0);
+      const selectedDate = moment().weekday(1).isoWeekYear(parseInt(serviceResult.year)).isoWeek(parseInt(serviceResult.week)).hour(1).minute(0).second(0).millisecond(0);
  
       for (let i = 1; i <= 7; i++) {
         let values: Activity[] = new Array;

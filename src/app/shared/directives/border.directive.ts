@@ -12,6 +12,7 @@ export class BorderDirective implements OnInit {
 
   ngOnInit() {
     const currentDay = moment(new Date()).clone().format('DD/MM/YYYY');
+    
     if (this.day === currentDay) {
       this.displayBorder = true;
     }

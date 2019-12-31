@@ -17,7 +17,6 @@ import { Athlete } from 'src/app/shared/store/reducers/athlete.reducer';
 import { allAthletesSelector, currentAthleteSelector } from 'src/app/shared/store/selectors/athlete.selectors';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TrySetCurrentAthlete } from 'src/app/shared/store/actions/athlete.actions';
-import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-week',
@@ -68,11 +67,11 @@ export class WeekComponent implements OnInit, OnDestroy {
 
   public changeAthlete(athleteId: number) {
     this.store.dispatch(new TrySetCurrentAthlete(athleteId));
-    this.store.dispatch(new FetchWeekActivities({ week: '48', year: '2019'}));
+    this.store.dispatch(new FetchWeekActivities({ week: '1', year: '2020'}));
   }
 
   public navigateToWeek(w: { week: string, year: string }) {
-    var selectedDate = moment().day("Tuesday").year(parseInt(w.year)).week(parseInt(w.week));
+    var selectedDate = moment().day("Tuesday").isoWeekYear(parseInt(w.year)).isoWeek(parseInt(w.week));
     var weekStart = selectedDate.clone().startOf('isoWeek').format('x');
     var weekEnd = selectedDate.clone().endOf('isoWeek').format('x');
 
