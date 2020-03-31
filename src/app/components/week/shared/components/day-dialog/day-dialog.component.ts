@@ -54,6 +54,6 @@ export class DayDialogComponent implements OnInit {
 
   public activityStatusChange(event) {
     console.log(event);
-    console.log(event.value);
+    console.log(event.checked);
   }
 }
