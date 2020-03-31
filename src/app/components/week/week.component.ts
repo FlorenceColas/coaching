@@ -11,7 +11,7 @@ import { Week, Activity } from 'src/app/shared/store/reducers/week.reducer';
 import { weekDetailsSelector, weekDaysSelector } from 'src/app/shared/store/selectors/week.selectors';
 import { FetchWeekActivities, SetWeekDetails, SetCurrentWeek } from 'src/app/shared/store/actions/week.actions';
 import { DateTools } from 'src/app/shared/classes/date-tools.classes';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DayDialogComponent } from './shared/components/day-dialog/day-dialog.component';
 import { Athlete } from 'src/app/shared/store/reducers/athlete.reducer';
 import { allAthletesSelector, currentAthleteSelector } from 'src/app/shared/store/selectors/athlete.selectors';

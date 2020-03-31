@@ -4,7 +4,9 @@ import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { State } from '../store';
 import { tokenSelector } from '../store/selectors/auth.selectors';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private token: string;
 
