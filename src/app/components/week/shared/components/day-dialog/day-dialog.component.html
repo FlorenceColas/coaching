@@ -36,11 +36,14 @@
               {{ act.categoryId | uppercase }}
             </label>
             <span style="align-content: flex-end;vertical-align: middle;">
-              <mat-radio-group [value]="act.state" class="col text-left">
-                <mat-radio-button value="1" (change)="activityStatusChange($event)">Done
-                </mat-radio-button>
-                <mat-radio-button *ngIf="act.planned==1" style="margin-left: 10px;" value="0" (change)="activityStatusChange($event)">Not done</mat-radio-button>
-              </mat-radio-group>
+              <mat-checkbox labelPosition="after"
+                (change)="activityStatusChange($event)">
+                Done
+              </mat-checkbox>
+              <mat-checkbox *ngIf="act.planned==1" labelPosition="after"
+                (change)="activityStatusChange($event)">
+                Not done
+              </mat-checkbox>
             </span>
             <div *ngIf="act.state==1 && act.categoryId != 'off'">
               <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">

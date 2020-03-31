@@ -61,7 +61,7 @@ export class DayComponent implements OnInit, OnDestroy {
         this.types = [
           {value: '2', viewValue: 'Lake'},
           {value: '1', viewValue: 'Pool'},
-          {value: '3', viewValue: 'See'}
+          {value: '3', viewValue: 'Open water'}
         ];
         break;
       case 'bike':
