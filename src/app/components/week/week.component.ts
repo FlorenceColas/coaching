@@ -67,7 +67,7 @@ export class WeekComponent implements OnInit, OnDestroy {
 
   public changeAthlete(athleteId: number) {
     this.store.dispatch(new TrySetCurrentAthlete(athleteId));
-    this.store.dispatch(new FetchWeekActivities({ week: '1', year: '2020'}));
+    this.store.dispatch(new FetchWeekActivities({ week: this.weekNumber, year: this.year}));
   }
 
   public navigateToWeek(w: { week: string, year: string }) {
